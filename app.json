@@ -17,10 +17,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.apk.Framer",
+      "config":{ 
+        "googleMapsApiKey": "AIzaSyAdTApBQEO9jjBMuzcMVtdJWklukSvF94k"
+      }
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.apk.Farmer"
     }
   }
 }
