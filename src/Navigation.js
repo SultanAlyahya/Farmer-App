@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, AntDesign, Octicons, FontAwesome } from '@expo/vector-icons';
-//import {connect} from 'react-redux'
 import {Observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from './Mobx/store'
+
 
 import HomeScreen from './Screens/HomeScreen'
 import OrderScreen from './Screens/OrderScreen'
@@ -19,10 +19,6 @@ import AddItem from './Screens/AddItemScreen'
 import DeleteItem from './Screens/DeleteItemScreen'
 import Statistics from './Screens/StatisticsScreen'
 import LocationScreen from './Screens/LocationScreen'
-
-
-
-
 
 
 
