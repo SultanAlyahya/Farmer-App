@@ -3,53 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default function Sections(props){
     return(
-      <TouchableOpacity style={styles.sectionItems} 
+      <TouchableOpacity style={{height:150, backgroundColor:'#ffffff', borderRadius:20, flexDirection:'row', margin:5}} 
       onPress={()=> props.navigation.navigate('Section',{pageTitle:props.pageTitle})}>
         
-        <View style={styles.sectionLogoContainer}>
-          <Text style={styles.sectionLogo}>{props.logo}</Text>
+        <View style={{width:90, fontSize:30, justifyContent:'center', paddingLeft:10}}>
+          <Text style={{fontSize:30}}>{props.logo}</Text>
         </View>
 
-        <View style={{...styles.sectionBody, backgroundColor:props.color}}>
-        <Text style={styles.sectionLogo}>{props.title}</Text>
+        <View style={{flex:1, backgroundColor:'#22aa22', borderTopRightRadius:20, borderBottomRightRadius:20, justifyContent:'center', paddingLeft:20, backgroundColor:props.color}}>
+        <Text style={{fontSize:30}}>{props.title}</Text>
       </View>
 
     </TouchableOpacity>
     );
 }
 
-const styles = StyleSheet.create({
-    sectionItems:{
-        width:'98%',
-        height:150,
-        //margin:5,
-        backgroundColor:'#ffffff',
-        borderRadius:20,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center'
-      },
-    sectionLogoContainer:{
-        width:'33%',
-        height:'100%',
-        fontSize:30,
-        justifyContent:'center',
-        alignItems:'center'
-      },
-      sectionLogo:{
-        fontSize:30,
-      },
-      sectionBody:{
-        width:'67%',
-        height:'100%',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#22aa22',
-        borderTopRightRadius:20,
-        borderBottomRightRadius:20
-      },
-      sectionTextContainer:{
-        height:40,
-        width:'100%',
-      }
-})

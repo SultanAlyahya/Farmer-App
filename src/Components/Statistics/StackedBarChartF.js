@@ -53,8 +53,8 @@ const StackedBarChartF =()=>{
     const keys = ['apples', 'cherries', 'bananas', 'dates']
  
     return (
-        <View style={styles.StackedBarChartContainer}>
-            <Text style={styles.lable}>your selling in the past 6 months</Text>
+        <View style={{height:280, backgroundColor:'#ffffff', borderRadius:10, borderWidth:1, borderColor:'#000000', padding:5, marginBottom:30}}>
+            <Text style={{fontSize:20}}>your selling in the past 6 months</Text>
             <StackedBarChart
                 style={{ height: 200 }}
                 keys={keys}
@@ -63,9 +63,9 @@ const StackedBarChartF =()=>{
                 showGrid={false}
                 contentInset={{ top: 30, bottom: 30 }}
             />
-            <View style={styles.itemSection}>
-                <View style={styles.itemStack}>
-                    <View style={styles.item}>
+            <View style={{flexDirection:'row'}}>
+                <View style={{width:150}}>
+                    <View style={{height:20, flexDirection:'row'}}>
                         <Svg>
                             <Rect
                             x="0"
@@ -75,11 +75,11 @@ const StackedBarChartF =()=>{
                             fill="#4C9C4B"
                             />
                             <View style={{marginLeft:25}}>
-                                <Text style={styles.itemName}> apples </Text>
+                                <Text style={{fontSize:15}}> apples </Text>
                             </View>
                         </Svg>
                     </View>
-                    <View style={styles.item}>
+                    <View style={{height:20, flexDirection:'row'}}>
                         <Svg>
                             <Rect
                             x="0"
@@ -89,13 +89,13 @@ const StackedBarChartF =()=>{
                             fill="#F7EC16"
                             />
                             <View style={{marginLeft:25}}>
-                                <Text style={styles.itemName}> bananas </Text>
+                                <Text style={{fontSize:15}}> bananas </Text>
                             </View>
                         </Svg>
                     </View>
                 </View>
-                <View style={styles.itemStack}>
-                    <View style={styles.item}>
+                <View style={{width:150}}>
+                    <View style={{height:20, flexDirection:'row'}}>
                         <Svg>
                             <Rect
                             x="0"
@@ -105,11 +105,11 @@ const StackedBarChartF =()=>{
                             fill="#4BB36F"
                             />
                             <View style={{marginLeft:25}}>
-                                <Text style={styles.itemName}> cherries </Text>
+                                <Text style={{fontSize:15}}> cherries </Text>
                             </View>
                         </Svg>
                     </View>
-                    <View style={styles.item}>
+                    <View style={{height:20, flexDirection:'row'}}>
                         <Svg>
                             <Rect
                             x="0"
@@ -119,7 +119,7 @@ const StackedBarChartF =()=>{
                             fill="#CCC745"
                             />
                             <View style={{marginLeft:25}}>
-                                <Text style={styles.itemName}> dates </Text>
+                                <Text style={{fontSize:15}}> dates </Text>
                             </View>
                         </Svg>
                     </View>
@@ -129,41 +129,5 @@ const StackedBarChartF =()=>{
     )
 }
 
-const styles = StyleSheet.create({
-    StackedBarChartContainer:{
-        height:280,
-        width:'100%',
-        padding:5,
-        backgroundColor:'#ffffff',
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:'#000000',
-        marginBottom:30
-    },
-    lable:{
-        fontSize:20,
-        width:'100%',
-        
-    },
-    itemSection:{
-        height:40,
-        width:'100%',
-        flexDirection:'row'
-    },
-    itemStack:{
-        height:40,
-        width:'33%',
-    },
-    item:{
-        height:20,
-        width:'100%',
-        //backgroundColor:'#d3d3d3',
-        flexDirection:'row'
-    },
-    itemName:{
-        //marginLeft:25,
-        fontSize:15
-    },
-})
 
 export default StackedBarChartF

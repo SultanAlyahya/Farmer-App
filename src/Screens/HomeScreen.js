@@ -1,16 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import {dameSections} from '../../assets/dameData'
-import Sections from '../Components/Sections'
-import {dameOffers} from '../../assets/dameData'
-//import {connect} from 'react-redux'
-import {dameItems} from '../../assets/dameData'
+import { Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import {testSections} from '../../assets/testData'
+import {testOffers} from '../../assets/testData'
+import {testItems} from '../../assets/testData'
 import {observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from '../Mobx/store'
 
 
+
+const Sections=(props)=>{
+  return(
+    <TouchableOpacity style={{height: 150, backgroundColor: '#ffffff', borderRadius: 20, flexDirection: 'row', margin: 5}} 
+    onPress={()=> props.navigation.navigate('Section',{pageTitle:props.pageTitle})}>
+      
+      <View style={{width: 90, fontSize: 30, justifyContent: 'center', paddingLeft: 10}}>
+        <Text style={{fontSize: 30}}>{props.logo}</Text>
+      </View>
+
+      <View style={{flex:1, backgroundColor: '#22aa22', borderTopRightRadius: 20, borderBottomRightRadius: 20, justifyContent: 'center', paddingLeft: 20, backgroundColor: props.color}}>
+      <Text style={{fontSize: 30}}>{props.title}</Text>
+    </View>
+
+  </TouchableOpacity>
+  );
+}
 
 
 const HomeScreen=observer ((props)=> {
@@ -21,45 +35,46 @@ const HomeScreen=observer ((props)=> {
 
   useEffect(() => {
     //props.add(dameItems)
-    store.add(dameItems)
+    store.add(testItems)
   }, []);
 
-  const header=(props)=>{
+  const ListHeaderComponent=(props)=>{
     return(
-      <View style={styles.offers}>
+      <View style={{flex: 1}}>
 
-        <TouchableOpacity style={styles.textContainer}>
-          <Text style={styles.SectionText}>  New offers</Text>
+        <TouchableOpacity style={{marginVertical: 5}}>
+          <Text style={{fontSize: 30}}>  New offers</Text>
         </TouchableOpacity>
         
 
         <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{...styles.offersContainer, width:offresNum*100}}
-        data={dameOffers}
+        style={{flex: 1}}
+        data={testOffers}
         renderItem={({ item }) => (
-          <TouchableOpacity style={{...styles.offerItems, backgroundColor: item.color}} />
+          <TouchableOpacity style={{width: 90, height: 90, margin: 5, borderRadius: 360, backgroundColor: item.color}} />
         )}
-        keyExtractor={item => item.color}
+        keyExtractor={item => item.id}
         />
 
-        <View style={styles.sectionTextContainer}>
-          <TouchableOpacity style={styles.textContainer} onPress={()=> console.log(dameSections)}>
-            <Text style={styles.SectionText}>  Sections</Text>
+        
+          <TouchableOpacity style={{marginVertical:5}}>
+            <Text style={{fontSize:30}}>  Sections</Text>
           </TouchableOpacity>
-        </View>
+    
 
       </View>
     )
   }
 
-  return (
-    <View style={styles.container}>       
 
-      <View style={styles.searchContainer}>
+  return (
+    <View style={{flex: 1}}>       
+
+      <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10}}>
         <TextInput 
-          style={styles.textInput}
+          style={{backgroundColor: '#ffffff', height: 50, borderWidth: 0.5, borderColor: '#000000', borderRadius: 10, fontSize: 25, paddingLeft: 10, marginBottom: 5}}
           onChangeText={text => setSearch(text)}
           value={search}
           placeholder='search'
@@ -67,9 +82,9 @@ const HomeScreen=observer ((props)=> {
       </View>
       
       <FlatList
-        ListHeaderComponent={header}
-        contentContainerStyle={{...styles.sectionList,height:(sectionsNum*160)+180}}
-        data={dameSections}
+        ListHeaderComponent={ListHeaderComponent}
+        style={{flex:1}}
+        data={testSections}
         renderItem={({ item }) => (
           <Sections
             title={item.title}
@@ -85,107 +100,6 @@ const HomeScreen=observer ((props)=> {
     </View>
   );
 })
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //backgroundColor: '#f3f3f3',
-    //alignItems: 'center',
-    //justifyContent: 'center',
-  },
-  searchContainer:{
-    width: '100%',
-    height:50,
-    backgroundColor:'#33dd33',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput:{
-    width:'95%',
-    backgroundColor:'#ffffff',
-    height:46,
-    borderWidth:0.5,
-    borderColor:'#000000',
-    borderRadius:10,
-    padding:2,
-    fontSize:25,
-    paddingLeft:10
-  },
-  testB:{
-    width:30,
-    height:30,
-    backgroundColor:'#000000'
-  },
-  offers:{
-    width:'100%',
-    height:180,
-  
-  },
-  offersContainer:{
-    height:100,
-    width:'100%',
-    //backgroundColor:'#444444',
-    marginTop:5,
-  },
-  offerItems:{
-    width:90,
-    height:90,
-    margin:5,
-    borderRadius:360
-  },
-  textContainer:{
-    height:30,
-    width:'50%',
-    margin:2.5
-  },
-  SectionText:{
-    fontSize:30,
-  },
-  SectionsContainer:{
-    width:'100%',
-    //backgroundColor:'#000000',
-    justifyContent:'space-around',
-    alignItems:'center'
-  },
-  sectionItems:{
-    width:'95%',
-    height:150,
-    //margin:5,
-    backgroundColor:'#ffffff',
-    borderRadius:20,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center'
-  },
-  sectionLogoContainer:{
-    width:'33%',
-    height:'100%',
-    fontSize:30,
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  sectionLogo:{
-    fontSize:30,
-  },
-  sectionBody:{
-    width:'67%',
-    height:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#22aa22',
-    borderTopRightRadius:20,
-    borderBottomRightRadius:20
-  },
-  sectionTextContainer:{
-    height:40,
-    width:'100%',
-  },
-  sectionList:{
-    width:'100%',
-    justifyContent:'space-around',
-    alignItems:'center'
-  }
-});
 
 
 export default HomeScreen;

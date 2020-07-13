@@ -3,9 +3,6 @@ import { View, StyleSheet, Text, Dimensions } from 'react-native'
 import { PieChart } from 'react-native-svg-charts'
 import {Svg ,Rect} from 'react-native-svg'
 
-const win = Dimensions.get('window')
-const WRation = win.width
-
 const PieChartF =()=>{
 
     const [pie, setPie] = useState('')
@@ -22,21 +19,21 @@ const PieChartF =()=>{
     ]
 
     return(
-        <View style={styles.pieChartContainer}>
-            <View style={styles.pieInfoTextContainer}>
-                <View style={styles.pieCobtainer}>
+        <View style={{height:300,backgroundColor:'#ffffff',borderRadius:10,borderWidth:1,borderColor:'#000000',}}>
+            <View style={{flex:1, flexDirection:'row'}}>
+                <View style={{width:230, justifyContent:'center'}}>
                     <PieChart 
                     style={{ height: 200 }} 
                     data={pieData}
                     innerRadius={'0%'}
                     />
                 </View>
-                <View style={styles.pieInfoContainer}>
-                    <View style={styles.pieTextContainer}>
-                    <Text style={styles.pieText}>selling this month</Text>
+                <View style={{flex:1,justifyContent:'center', paddingLeft:20}}>
+                    <View style={{justifyContent:'center', marginVertical:30}}>
+                        <Text style={{fontSize:25}}>selling this month</Text>
                     </View>
-                    <View style={styles.pieItems}>
-                        <View style={styles.item}>
+                    <View style={{flex:1}}>
+                        <View style={{flexDirection:'row', marginVertical:5}}>
                             <Svg>
                                 <Rect
                                 x="0"
@@ -46,11 +43,11 @@ const PieChartF =()=>{
                                 fill="#4C9C4B"
                                 />
                                 <View style={{marginLeft:25}}>
-                                    <Text style={styles.itemName}> apples </Text>
+                                    <Text> apples </Text>
                                 </View>
                             </Svg>
                         </View>
-                        <View style={styles.item}>
+                        <View style={{flexDirection:'row', marginVertical:5}}>
                             <Svg>
                                 <Rect
                                 x="0"
@@ -60,11 +57,11 @@ const PieChartF =()=>{
                                 fill="#F7EC16"
                                 />
                                 <View style={{marginLeft:25}}>
-                                    <Text style={styles.itemName}> bananas </Text>
+                                    <Text> bananas </Text>
                                 </View>
                             </Svg>
                         </View>
-                        <View style={styles.item}>
+                        <View style={{flexDirection:'row', marginVertical:5}}>
                             <Svg>
                                 <Rect
                                 x="0"
@@ -74,11 +71,11 @@ const PieChartF =()=>{
                                 fill="#4BB36F"
                                 />
                                 <View style={{marginLeft:25}}>
-                                    <Text style={styles.itemName}> cherries </Text>
+                                    <Text> cherries </Text>
                                 </View>
                             </Svg>
                         </View>
-                        <View style={styles.item}>
+                        <View style={{flexDirection:'row', marginVertical:5}}>
                             <Svg>
                                 <Rect
                                 x="0"
@@ -88,78 +85,19 @@ const PieChartF =()=>{
                                 fill="#CCC745"
                                 />
                                 <View style={{marginLeft:25}}>
-                                    <Text style={styles.itemName}> dates </Text>
+                                    <Text> dates </Text>
                                 </View>
                             </Svg>
                         </View>
                     </View>
                 </View>
             </View>
-            <View style={styles.pieDisplay}>
-                <Text>Press on color in Pie Chart to have the selling number: {pie}</Text>
+            <View style={{marginVertical:10}}>
+                <Text style={{fontSize:25}}>Press on Pie Chart:   {pie || 0} sold items</Text>
             </View>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    pieChartContainer:{
-        width:'100%',
-        height:290,
-        backgroundColor:'#ffffff',
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:'#000000',
-        //flexDirection:'row'
-    },
-    pieCobtainer:{
-        height:250,
-        width:220,
-        justifyContent:'center'
-    },
-    pieInfoContainer:{
-        height:250,
-        width:WRation-230,
-        justifyContent:'center',
-        padding:20
-    },
-    pieTextContainer:{
-        height:'50%',
-        width:'100%',
-        justifyContent:'center',
-        alignItems:'center',
-        //backgroundColor:'#d3d3d3'
-    },
-    pieText:{
-        fontSize:25
-    },
-    pieItems:{
-        height:'50%',
-        width:'100%',
-        //backgroundColor:'#d3d3d3',
-        justifyContent:'space-around'
-        
-    },
-    pieItemStack:{
-        width:'50%',
-        height:'100%'
-    },
-    pieDisplay:{
-        height:30,
-        width:'100%',
-        //backgroundColor:'#3d3d3d'
-    },
-    pieInfoTextContainer:{
-        height:250,
-        width:'100%',
-        flexDirection:'row'
-    },
-    item:{
-        height:20,
-        width:'100%',
-        //backgroundColor:'#d3d3d3',
-        flexDirection:'row'
-    },
-})
 
 export default PieChartF

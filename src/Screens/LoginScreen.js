@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 
 const win = Dimensions.get('window')
 const WRatio = win.width
-const containerWidth = WRatio*0.75
 
 function LoginScreen({navigation}){
 
@@ -12,87 +11,41 @@ function LoginScreen({navigation}){
     const [password, setPassword] = useState()
 
     return(
-        <View style={styles.container}>
-            <View style={styles.infoContainer}>
-                <Text style={styles.logo}>login</Text>
+        <View style={{ flex:1, justifyContent: 'center', backgroundColor: '#dddddd'}}>
+            <View style={{backgroundColor:'#ffffff', borderRadius:20, padding:20}}>
+
+                <View style={{width:100,height:100, marginLeft:(WRatio-120)/2}}>
+                    <Text style={{fontSize:50}}>login</Text>
+                </View>
+
                 <View>
-                    <Text style={styles.lable}>Name</Text>
-                    <TextInput style={styles.textField}
+                    <Text style={{fontSize:30, marginTop:20}}>  Name</Text>
+                    <TextInput style={{height:50, backgroundColor:'#f3f3f3', borderRadius:20, borderWidth:1, borderColor:'#000000', paddingLeft:5, marginRight:50, fontSize:25}}
                     placeholder="Name"
                     onChangeText={(text)=>setName(text)}/>
 
-                    <Text style={styles.lable}>Email</Text>
-                    <TextInput style={styles.textField}
+                    <Text style={{fontSize:30, marginTop:20}}>  Email</Text>
+                    <TextInput style={{height:50, backgroundColor:'#f3f3f3', borderRadius:20, borderWidth:1, borderColor:'#000000', paddingLeft:5, marginRight:50, fontSize:25}}
                     placeholder="Email"
                     onChangeText={(text)=>setEmail(text)}
                     textContentType='emailAddress'/>
 
-                    <Text style={styles.lable}>Password</Text>
-                    <TextInput style={styles.textField}
+                    <Text style={{fontSize:30, marginTop:20}}>  Password</Text>
+                    <TextInput style={{height:50, backgroundColor:'#f3f3f3', borderRadius:20, borderWidth:1, borderColor:'#000000', paddingLeft:5, marginRight:50, fontSize:25}}
                     placeholder="Password"
                     onChangeText={(text)=>setPassword(text)}
                     textContentType="password"
                     secureTextEntry={true}/>
 
-                    <TouchableOpacity style={styles.loginButton}
+                    <TouchableOpacity style={{height:60, marginHorizontal:50, backgroundColor:'#3ba8e7', marginTop:40, borderRadius:10, justifyContent:'center', paddingLeft:100,}}
                     onPress={()=> navigation.navigate('profile')}>
-                        <Text style={styles.textButton}>login</Text>
+                        <Text style={{fontSize:35, color:'#ffffff'}}>login</Text>
                     </TouchableOpacity>
                 </View>
+
             </View>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'#dddddd'
-    },
-    infoContainer:{
-        width:containerWidth,
-        height:containerWidth*2,
-        backgroundColor:'#ffffff',
-        borderRadius:20,
-        // justifyContent:'space-around',
-        alignItems:'center',
-        padding:20
-    },
-    logo:{
-        fontSize:50,
-        margin:10
-    },
-    textField:{
-        width:containerWidth-40,
-        height:containerWidth/6,
-        //borderWidth:1,
-        //borderColor:'#000000',
-        backgroundColor:'#f3f3f3',
-        borderRadius:20,
-        borderWidth:1,
-        borderColor:'#000000',
-        padding:5,
-        fontSize:25
-    },
-    lable:{
-        fontSize:30,
-        marginTop:20,
-    },
-    loginButton:{
-        width:containerWidth-40,
-        height:containerWidth/6+10,
-        backgroundColor:'#3ba8e7',
-        marginTop:containerWidth/6,
-        borderRadius:10,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    textButton:{
-        fontSize:35,
-        color:'#ffffff'
-    }
-})
 
 export default LoginScreen;

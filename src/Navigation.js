@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,7 +10,7 @@ import 'mobx-react-lite/batchingForReactNative'
 import store from './Mobx/store'
 
 import HomeScreen from './Screens/HomeScreen'
-import Orders from './Screens/Orders'
+import OrderScreen from './Screens/OrderScreen'
 import SectionScreen from './Screens/SectionScreen'
 import CartScreen from './Screens/CartScreen'
 import ProfileScreen from './Screens/ProfileScreen'
@@ -19,7 +18,8 @@ import LoginScreen from './Screens/LoginScreen'
 import AddItem from './Screens/AddItemScreen'
 import DeleteItem from './Screens/DeleteItemScreen'
 import Statistics from './Screens/StatisticsScreen'
-import Location from './Screens/LocationScreen'
+import LocationScreen from './Screens/LocationScreen'
+
 
 
 
@@ -42,7 +42,7 @@ const HomeScreens=()=> {
 const OrderScreens=()=>{
   return(
     <Stack.Navigator>
-      <Stack.Screen name="your orders" component={Orders} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}} />
+      <Stack.Screen name="your orders" component={OrderScreen} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}} /> 
     </Stack.Navigator>
   )
 }
@@ -50,7 +50,7 @@ const OrderScreens=()=>{
 const CartScreens=()=>{
   return(
     <Stack.Navigator>
-      <Stack.Screen name="cart" component={CartScreen} options={{headerTitle:"Cart", headerStyle:{backgroundColor:'#33dd33'}}} />
+      <Stack.Screen name="cart" component={CartScreen} options={{headerTitle:"Cart", headerStyle:{backgroundColor:'#33dd33'}}} /> 
     </Stack.Navigator>
   )
 }
@@ -61,7 +61,7 @@ const ProfileScreens=()=>{
       <Stack.Screen name="login" component={LoginScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="addItem" component={AddItem} options={{headerTitle:"Add Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="deleteItem" component={DeleteItem} options={{headerTitle:"delete Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
-      <Stack.Screen name="statistics" component={Statistics} options={{headerTitle:"Statistics", headerStyle:{backgroundColor:'#3ba8e7'}}} />
+      <Stack.Screen name="statistics" component={Statistics} options={{headerTitle:"Statistics", headerStyle:{backgroundColor:'#3ba8e7'}}} />  
     </Stack.Navigator>
   )
 }
@@ -69,12 +69,12 @@ const ProfileScreens=()=>{
 const LocationScreens =()=> {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="location" component={Location} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}}/>
+      <Stack.Screen name="location" component={LocationScreen} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}}/>
     </Stack.Navigator>
   )
 }
 
-const TabNavigation = ()=>{
+const Navigation = ()=>{
 
     const IconWithBadge=({ color, size }) =>(
       <Observer>{()=>
@@ -134,6 +134,7 @@ const TabNavigation = ()=>{
           ),
         }}
         />
+        
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -145,4 +146,4 @@ const TabNavigation = ()=>{
 //     }
 // }
 
-export default TabNavigation;
+export default Navigation;

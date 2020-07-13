@@ -1,75 +1,94 @@
-export const dameSections = [
+export const testSections = [
     { 
         logo:'logo',
         title:'Vegetables',
         color:'#00dd00',
-        id:'sgsg'
+        id:'1'
     },
     { 
         logo:'logo',
         title:'Meats',
         color:'#dd0000',
-        id:'sdg'
+        id:'2'
     },
     { 
         logo:'logo',
         title:'Cleaning supplies',
         color:'#2222ff',
-        id:'sh'
+        id:'3'
     },
     { 
         logo:'logo',
         title:'Drinks',
         color:'#5555ff',
-        id:'dhad'
+        id:'4'
     },
     { 
         logo:'logo',
         title:'The bekery',
         color:'#dddd00',
-        id:'dgae'
+        id:'5'
     }
 ]
 
 
-export const dameOffers = [
+export const testOffers = [
     
     {
         color:'#dd3333',
-        id:1
+        id:'1'
     },
-    {color:'#33dd33', id:'asg'},
-    {color:'#3333dd', id:'agg'},
-    {color:'#da3333', id:'wefs'},
-    {color:'#33da33', id:'sag'},
-    {color:'#3333da', id:'sgrg'}
+    {
+        color:'#33dd33', 
+        id:'2'
+    },
+    {
+        color:'#3333dd', 
+        id:'3'
+    },
+    {
+        color:'#da3333', 
+        id:'4'
+    },
+    {
+        color:'#33da33', 
+        id:'5'
+    },
+    {
+        color:'#3333da', 
+        id:'6'
+    }
     
 ]
 
-export const dameOrders = [
+export const testOrders = [
     {
         items:'lettuce, soup',
         price:'198.43',
-        date:'2020/6/10'
+        date:'2020/6/10',
+        id:'1'
     },
     {
         items:'lettuce, orange',
         price:'643.85',
-        date:'2020/5/19'
+        date:'2020/5/19',
+        id:'2'
     },
     {
         items:'drinks',
         price:'3434.5',
-        date:'2020/5/11'
+        date:'2020/5/11',
+        id:'3'
     },
     {
         items:'cleaning stuff',
         price:'19.34',
-        date:'2020/4/11'
+        date:'2020/4/11',
+        id:'4'
     }
 ]
 
-export const dameItems = [
+export const testItems = [
     {
         name:'lettuce',
         price:'1',

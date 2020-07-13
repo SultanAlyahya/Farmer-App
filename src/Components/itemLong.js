@@ -16,21 +16,21 @@ const itemHight = WRation/3
 
 const ItenLong= observer( ({name, id, price, pieces, select})=>{
     return(
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
+        <View style={{flex:1, marginBottom:5, flexDirection:'row', justifyContent:'space-between',}}>
+            <View style={{width:150, height:150, backgroundColor:'#d3d3d3'}}>
                 
             </View>
-            <View style={styles.infoContainer}>
-                <Text style={styles.name}>{name}</Text>
-                <Text style={styles.price}>Price: {price} SR</Text>
+            <View style={{justifyContent:'space-around', alignItems:'center'}}>
+                <Text style={{fontSize:25}}>{name}</Text>
+                <Text style={{fontSize:20}}>Price: {price} SR</Text>
             </View>
             {select?
-            <View style={styles.addButton}>
+            <View style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}>
                 <TouchableOpacity style={styles.sign}
                 onPress={()=>store.plus(id)}>
                     <Entypo name="plus" size={35} color="black" />
                 </TouchableOpacity>
-                <Text style={{...styles.buttonText, justifyContent:'space-between'}}>{pieces}</Text>
+                <Text style={{fontSize:30, color:'#33dd33'}}> {pieces}</Text>
 
                 {pieces === 1?
                 <TouchableOpacity
@@ -46,9 +46,9 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
             </View>
             :
             <TouchableOpacity
-            style={styles.addButton}
+            style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}
             onPress={()=>store.select(id)}>
-                <Text style={styles.buttonText}>add </Text>
+                <Text style={{fontSize:30, color:'#33dd33'}}>add </Text>
                 <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
             </TouchableOpacity>
             }
@@ -58,51 +58,11 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
 })
 
 const styles = StyleSheet.create({
-    container:{
-        width:WRation,
-        height:itemHight,
-        //backgroundColor:'#444444',
-        //alignItems:'center',
-        margin:5,
-        flexDirection:'row',
-        justifyContent:'space-between',
-    },
-    imageContainer:{
-        width:itemHight,
-        height:itemHight,
-        backgroundColor:'#d3d3d3'
-    },
-    infoContainer:{
-        height:'100%',
-        width:WRation-(itemHight*2)+10,
-        //backgroundColor:'#aaaaaa',
-        justifyContent:'space-around',
-        alignItems:'center'
-    },
-    addButton:{
-        width:itemHight-10,
-        height:itemHight,
-        borderRadius:5,
-        
-        justifyContent:'center',
-        alignItems:'center',
-        borderWidth:1,
-        borderColor:'#33dd33'
-    },
-    price:{
-        fontSize:20
-    },
-    name:{
-        fontSize:25
-    },
-    buttonText:{
-        fontSize:30,
-        color:'#33dd33'
-    },
-    sign:{
-        width:35,
-        height:35
-    }
+    
+   
+    
+    
+
 
 })
 

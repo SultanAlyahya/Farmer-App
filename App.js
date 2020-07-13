@@ -1,5 +1,5 @@
 import React from 'react';
-import TabNavigation from './src/Navigation'
+import Navigation from './src/Navigation'
 //import {Provider} from 'react-redux'
 
 //import configureStore from './src/Redux/Store'
@@ -11,6 +11,6 @@ export default function App(){
     // <Provider store={store}>
     //   <TabNavigation/>
     // </Provider>
-    <TabNavigation/>
+    <Navigation/>
   )
 }

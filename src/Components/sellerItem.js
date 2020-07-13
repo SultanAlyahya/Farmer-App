@@ -10,19 +10,15 @@ import store from '../Mobx/store'
 
 const SellerItem = ({image, name, price, quantity})=>{
 
-    useEffect(()=>{
-        //console.log(name+" "+price+" "+quantity)
-    },[])
-
     return(
-        <View style={styles.container}>
-            <Image source={{uri:image}} style={styles.image}/>
-            <View style={styles.infoContainer}>
-            <Text style={styles.info}>name: {name}</Text>
-            <Text style={styles.info}>price: {price}</Text>
-            <Text style={styles.info}>quantity: {quantity}</Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between', borderColor:'#000000', borderBottomWidth:1}}>
+            <Image source={{uri:image}} style={{width:150, height:150}}/>
+            <View style={{justifyContent:'space-around'}}>
+            <Text style={{fontSize:20}}>name: {name}</Text>
+            <Text style={{fontSize:20}}>price: {price}</Text>
+            <Text style={{fontSize:20}}>quantity: {quantity}</Text>
             </View>
-            <TouchableOpacity style={styles.deleteButton}
+            <TouchableOpacity style={{justifyContent:'center', marginRight:10}}
             onPress={()=> store.deleteSellerItem(name)}>
                 <MaterialIcons name="delete" size={90} color="black" />
             </TouchableOpacity>
@@ -30,34 +26,5 @@ const SellerItem = ({image, name, price, quantity})=>{
     )
 }
 
-const styles = StyleSheet.create({
-    container:{
-        width:'100%',
-        height:150,
-        flexDirection:'row',
-        borderColor:'#000000',
-        borderBottomWidth:1,
-        justifyContent:'space-between'
-        
-    },
-    image:{
-        width:150,
-        height:150
-    },
-    infoContainer:{
-        //backgroundColor:'#555555',
-        justifyContent:'space-around'
-    },
-    deleteButton:{
-        width:100,
-        height:'100%',
-        //backgroundColor:'#555555',
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    info:{
-        fontSize:20
-    }
-})
 
 export default SellerItem

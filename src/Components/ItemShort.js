@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, Entypo, MaterialIcons } from '@expo/vector-icons';
 // import {connect} from 'react-redux'
 // import {addItem, plusItem, minusItem, deleteItem, changeStatus} from '../Redux/Action'
@@ -16,22 +16,22 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
     
 
     return(
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
+        <View style={{flex:1, marginBottom:10}}>
+            <View style={{width:itemWidht*0.75, height:itemWidht*0.75, backgroundColor:'#d3d3d3', marginHorizontal:itemWidht*0.25/2}}>
     
             </View>
-            <View style={styles.itemNameContrainer}>
-                <Text style={styles.name}>{name}</Text>
-                <Text style={styles.name}>{price} SR</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between', paddingHorizontal:10, marginVertical:5}}>
+                <Text style={{fontSize:23}}>{name}</Text>
+                <Text style={{fontSize:23}}>{price} SR</Text>
             </View>
             {select?
 
-            <View style={{...styles.addButton,justifyContent:'space-around'}}>
+            <View style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'space-around', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}>
                 <TouchableOpacity
                 onPress={()=>store.plus(id)}>
                     <Entypo name="plus" size={35} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.buttonText}>{pieces}</Text>
+                <Text style={{fontSize:30, color:'#33dd33'}}>{pieces}</Text>
 
                 {pieces === 1?
 
@@ -52,9 +52,9 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
 
             :
 
-            <TouchableOpacity style={styles.addButton}
+            <TouchableOpacity style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}
             onPress={()=>store.select(id)}>
-                <Text style={styles.buttonText}>add </Text>
+                <Text style={{fontSize:25, color:'#33dd33'}}>add </Text>
                 <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
             </TouchableOpacity>
 
@@ -62,59 +62,6 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
             
         </View>
     )
-})
-
-const styles = StyleSheet.create({
-    container:{
-        width:itemWidht,
-        height:itemWidht+50,
-        //backgroundColor:'#444444',
-        alignItems:'center',
-        marginBottom:10
-    },
-    imageContainer:{
-        width:itemWidht*0.75,
-        height:itemWidht*0.75,
-        backgroundColor:'#d3d3d3'
-    },
-    info:{
-        width:'100%',
-        height:'25%',
-    },
-    addButton:{
-        width:'100%',
-        height:'25%',
-    },
-    itemNameContrainer:{
-        width:'90%',
-        height:itemWidht*0.25,
-        justifyContent:'space-between',
-        //backgroundColor:'#d3d3d3'.
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    name:{
-        fontSize:23
-    },
-    addButton:{
-        width:'95%',
-        height:50,
-        //backgroundColor:'#33dd33',
-        borderRadius:5,
-        flexDirection:'row',
-        justifyContent:'center',
-        alignItems:'center',
-        borderWidth:1,
-        borderColor:'#33dd33'
-    },
-    buttonText:{
-        fontSize:25,
-        color:'#33dd33'
-    },
-    sign:{
-        width:50,
-        height:50
-    }
 })
 
 // const mapStateToProps =(state)=>{

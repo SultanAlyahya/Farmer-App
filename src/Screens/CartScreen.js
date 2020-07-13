@@ -1,40 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-//import {connect} from 'react-redux'
-import ItemsInCart from '../Components/ItemsInCart'
-import { Observer} from 'mobx-react'
+import React from 'react';
+import { StyleSheet, View, FlatList, Text, TouchableOpacity } from 'react-native';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { Observer, observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from '../Mobx/store'
 
-const CartScreen=()=>{
-    
+const ItemsInCart= observer( (props)=>{
 
-        return(
-        <View style={styles.container}>
-        <FlatList
-        data={store.list}
-        renderItem={({item,index})=>(<Observer>{()=>
+    return(
+        <View style={{flex:1, backgroundColor:'#ffffff', flexDirection:'row', justifyContent:'space-between', borderBottomWidth:1, borderColor:'#000000'}}>
+            <View style={{width:100, height:100, backgroundColor:'#333333'}}>
+
+            </View>
+
+            <View style={{padding:10, justifyContent:'space-around'}}>
+                <Text style={{fontSize:20}}>{props.name}</Text>
+                <Text>price:{"\n"}{props.price*store.list[props.index].pieces} SR</Text>
+            </View>
+
+            <View style={{flexDirection:'row', justifyContent:'space-around', marginTop:20}}>
+
+                <TouchableOpacity styles={{width:50, height:50}}
+                onPress={()=> store.plus(props.id)}>
+                    <Entypo name="plus" size={50} color="black" />
+                </TouchableOpacity>
+
+                <Text style={{fontSize:50}}>{props.pieces}</Text>
+
+                <TouchableOpacity styles={{width:50, height:50}}
+                onPress={()=> store.minus(props.id)}>
+                    <Entypo name="minus" size={50} color="black" />
+                </TouchableOpacity>
+
+            </View>
+
+            <TouchableOpacity style={{marginHorizontal:10, marginTop:25}}
+            onPress={()=> store.delete(props.id)}>
+                <MaterialIcons name="delete" size={50} color="black" />
+            </TouchableOpacity>
+
+        </View>
+    )
+})
+
+const CartScreen=()=>{
+   
+    return(
+        <View style={{flex: 1}}>
+            <FlatList
+            data={store.list}
+            renderItem={({item,index})=>(<Observer>{()=>
             item.select?
             
-            <ItemsInCart
-            name={item.name}
-            price={item.price}
-            id={item.id}
-            pieces={item.pieces}
-            index={index}
-            />
+                <ItemsInCart
+                name={item.name}
+                price={item.price}
+                id={item.id}
+                pieces={item.pieces}
+                index={index}
+                />
             
             :
-            <View></View>
-        }</Observer>
-        )}
-        keyExtractor={item=> item.name+""+item.price}
-        />
+                <View></View>
+            }</Observer>
+            )}
+            keyExtractor={item=> item.name+""+item.price}
+            />
         </View>
-        )
-        // <TouchableOpacity style={{width:400, height:200, backgroundColor:'black'}}
-        // onPress={()=>console.log(props.items)}/>
-        
+    )
     
 }
 
@@ -43,10 +76,6 @@ const styles = StyleSheet.create({
         width:'100%',
         height:'100%'
     },
-    items:{
-        width:'100%',
-        height:100,
-    }
 })
 
 // const mapStateToProps=(state)=>{
