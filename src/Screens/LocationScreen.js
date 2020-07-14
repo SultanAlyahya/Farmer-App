@@ -12,14 +12,10 @@ const WRation = win.width
 
 const LocationScreen =({navigation})=> {
 
-    const [latitude, setLatitude] = useState(null);
-    const [longitude, setLongitude] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [markers, setMarkers] = useState(null);
-    const [currentLocationCard, setCurrentLocationCard] = useState({uri: require("../../assets/Alsadhan-farmerApp.png"), title: '', description: ''})
-    //const [showCard, setShowCard] = useState(false)
-    const [homeMarkerLat, setHomeMarkerLat] = useState(null)
-    const [homeMarkerlong, setHomeMarkerlong] = useState(null)
+  const [location, setLocation] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [markers, setMarkers] = useState(null);
+  const [currentLocationCard, setCurrentLocationCard] = useState({uri: require("../../assets/Alsadhan-farmerApp.png"), title: '', description: ''})
 
 
 
@@ -33,10 +29,7 @@ const LocationScreen =({navigation})=> {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLatitude(location.coords.latitude)
-      setLongitude(location.coords.longitude)
-      setHomeMarkerLat(location.coords.latitude)
-      setHomeMarkerlong(location.coords.longitude)
+      setLocation({lat: location.coords.latitude, long: location.coords.longitude})
     })();
     setMarkers(testMarkers)
   },[]);
@@ -44,8 +37,6 @@ const LocationScreen =({navigation})=> {
   const cardAnimation = useRef(new Animated.Value(-200)).current;
 
   const changLocationCard = ({title, description, uri, lat, long}) => {
-    setLatitude(lat)
-    setLongitude(long)
     Animated.timing(cardAnimation, {
       toValue: -200,
       duration: 300,
@@ -65,7 +56,7 @@ const LocationScreen =({navigation})=> {
         markers.map((marker)=>
         <Marker
         coordinate={{
-          key: marker.id,
+          key: marker.id+''+marker.title,
           latitude: marker.lat,
           longitude: marker.long
         }}
@@ -80,20 +71,21 @@ const LocationScreen =({navigation})=> {
   
   return (
     <View style={{flex: 1, backgroundColor: '#fff',}}>
-      {longitude && latitude && homeMarkerLat && homeMarkerlong? 
+      {location? 
       <View style={{flex:1}}>
-        <MapView style={{flex:1}} 
-        region={{
-            latitude: latitude,
-            longitude: longitude,
+        <MapView style={{flex:1}}
+        initialRegion={{
+            latitude: location.lat,
+            longitude: location.long,
             longitudeDelta: 0.015,
             latitudeDelta: 0.020
-        }}>
+        }}
+        >
 
           <Marker
           coordinate={{
-            latitude: homeMarkerLat,
-            longitude: homeMarkerlong
+            latitude: location.lat,
+            longitude: location.long
               }}
           image={require('../../assets/marker-farmerApp.png')}
           title="Home"
