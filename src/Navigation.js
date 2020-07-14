@@ -72,31 +72,31 @@ const LocationScreens =()=> {
 
 const Navigation = ()=>{
 
-    const IconWithBadge=({ color, size }) =>(
-      <Observer>{()=>
-        <View style={{ width: 24, height: 24, margin: 5 }}>
-          <AntDesign name="shoppingcart" color={color} size={size} />
+  const IconWithBadge=({ color, size }) =>(
+    <Observer>{()=>
+      <View style={{ width: 24, height: 24, margin: 5 }}>
+        <AntDesign name="shoppingcart" color={color} size={size} />
           {store.selected > 0 && (
-            <View
-              style={{
-                position: 'absolute',
-                right: -6,
-                top: -3,
-                backgroundColor: 'red',
-                borderRadius: 6,
-                width: 12,
-                height: 12,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                {store.selected}
-              </Text>
-            </View>
+          <View
+            style={{
+              position: 'absolute',
+              right: -6,
+              top: -3,
+              backgroundColor: 'red',
+              borderRadius: 6,
+              width: 12,
+              height: 12,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+              {store.selected}
+            </Text>
+          </View>
           )}
-        </View>
-      }</Observer>
-    );
+      </View>
+    }</Observer>
+  );
       
       
   return(
@@ -128,7 +128,7 @@ const Navigation = ()=>{
           ),
         }}
         />
-        
+
         <Tab.Screen name="Profile" component={ProfileScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={size} />
