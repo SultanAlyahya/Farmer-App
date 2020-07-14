@@ -18,13 +18,6 @@ const LocationScreen =({navigation})=> {
     const [errorMsg, setErrorMsg] = useState(null);
     const [locationSelect, setLocationSelect] = useState('');
 
-    
-    // const show =()=>{
-    //   Animated.timing(showCard,{
-    //     toValue: WRation*0.4,
-    //     duration: 5000
-    //     }).start();  
-    // }
 
   useEffect(() => {
     (async () => {
@@ -41,10 +34,10 @@ const LocationScreen =({navigation})=> {
   },[]);
 
   
-    return (
-      <View style={{flex: 1, backgroundColor: '#fff',}}>
-        {longitude && latitude? 
-        <View style={{flex:1}}>
+  return (
+    <View style={{flex: 1, backgroundColor: '#fff',}}>
+      {longitude && latitude? 
+      <View style={{flex:1}}>
         <MapView style={{flex:1}} 
         region={{
             latitude: latitude,
@@ -53,90 +46,90 @@ const LocationScreen =({navigation})=> {
             latitudeDelta: 0.020
         }}>
 
-            <Marker
+          <Marker
+          coordinate={{
+            latitude: latitude,
+            longitude: longitude
+              }}
+          image={require('../../assets/marker-farmerApp.png')}
+          title="Home"
+          />
+              
+          <Marker
             coordinate={{
-                latitude: latitude,
-                longitude: longitude
-            }}
-            image={require('../../assets/marker-farmerApp.png')}
-            title="Home"
-            />
-            
-            <Marker
-            coordinate={{
-                latitude: 24.798077,
-                longitude: 46.642209
-            }}
+              latitude: 24.798077,
+              longitude: 46.642209
+              }}
             image={require('../../assets/markerStore-farmerApp.png')}
             title="panda"
             description="supermarker"
-            //onCalloutPress={()=> alert('yes')}
             onSelect={()=> setLocationSelect('panda')}
             onDeselect={()=> setLocationSelect('')}/>
+
         </MapView>
 
         <View style={{position: 'absolute', top: 20,}}>
 
-            <TextInput
-            style={{marginHorizontal: 20, marginBottom: 10, height: 50, backgroundColor: '#ffffff', borderRadius: 10, paddingLeft: 10, fontSize: 20}}
-            placeholder="search"
-            />
+          <TextInput
+          style={{marginHorizontal: 20, marginBottom: 10, height: 50, backgroundColor: '#ffffff', borderRadius: 10, paddingLeft: 10, fontSize: 20}}
+          placeholder="search"
+          />
 
-             <ScrollView
-            horizontal={true}>
+          <ScrollView
+          horizontal={true}>
 
             <TouchableOpacity style={{width: 150, height: 40, backgroundColor: '#ffffff', borderRadius: 20, marginHorizontal: 5, paddingLeft: 10, justifyContent: 'center'}}>
-                <Text>supermarker</Text>
+              <Text>supermarker</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={{width: 150, height: 40, backgroundColor: '#ffffff', borderRadius: 20, marginHorizontal: 5, paddingLeft: 10, justifyContent: 'center'}}>
-                <Text>fastfood</Text>
+              <Text>fastfood</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={{width: 150, height: 40, backgroundColor: '#ffffff', borderRadius: 20, marginHorizontal: 5, paddingLeft: 10, justifyContent: 'center'}}>
-                <Text>Stores</Text>
+              <Text>Stores</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={{width: 150, height: 40, backgroundColor: '#ffffff', borderRadius: 20, marginHorizontal: 5, paddingLeft: 10, justifyContent: 'center'}}>
-                <Text>banks</Text>
+              <Text>banks</Text>
             </TouchableOpacity>
 
-        </ScrollView>
+          </ScrollView>
         </View>
 
         {locationSelect === 'panda'?
-        
+          
         <View style={{width:WRation*0.8, backgroundColor:'#ffffff', marginBottom:20, position:'absolute', bottom:0, marginHorizontal:WRation*0.1, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:WRation*0.05}}>
 
-            <Image 
-            style={{ width:WRation*0.3, height:WRation*0.3 }}
-            source={require('../../assets/panda.png')}/>
+          <Image 
+          style={{ width:WRation*0.3, height:WRation*0.3 }}
+          source={require('../../assets/panda.png')}/>
 
-            <View>
-                <View style={{marginTop:20, flex:1}}>
-                    <Text style={{fontSize: 20}}>panda</Text>
-                    <Text style={{fontSize: 20}}>Supermarket</Text>
-                </View>
-
-                <TouchableOpacity style={{flex:1, borderRadius:20, backgroundColor:'#3ba8e7', justifyContent:'center', paddingLeft:15, marginTop:15}}
-                onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
-                    <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
-                </TouchableOpacity>
-
+          <View>
+            <View style={{marginTop:20, flex:1}}>
+              <Text style={{fontSize: 20}}>panda</Text>
+              <Text style={{fontSize: 20}}>Supermarket</Text>
             </View>
+
+            <TouchableOpacity style={{flex:1, borderRadius:20, backgroundColor:'#3ba8e7', justifyContent:'center', paddingLeft:15, marginTop:15}}
+            onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
+              <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
+            </TouchableOpacity>
+
+          </View>
         </View>
         :
         <></>
         }
             
-        </View>
-        :
-        <View style={{flex: 1 ,justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color="#00ff00" />
-        </View>
-        }
       </View>
-    );
+      :
+      <View style={{flex: 1 ,justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+      }
+    </View>
+  );
   
 }
 

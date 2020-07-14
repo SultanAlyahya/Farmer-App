@@ -102,28 +102,33 @@ const Navigation = ()=>{
   return(
     <NavigationContainer>
       <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
+
         <Tab.Screen name="Home"  component={HomeScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-home" color={color} size={size} />
           ),
         }}
         />
+
         <Tab.Screen name="Cart" component={CartScreens} options={{
           tabBarIcon: IconWithBadge
         }}
         />
+
         <Tab.Screen name="location" component={LocationScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="map-marker" color={color} size={size} />
           ),
         }}
         />
+
         <Tab.Screen name="Orders" component={OrderScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <Octicons name="list-unordered" color={color} size={size} />
           ),
         }}
         />
+        
         <Tab.Screen name="Profile" component={ProfileScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={size} />
@@ -136,10 +141,5 @@ const Navigation = ()=>{
   );
 }
 
-// const mapStateToProps=(state)=>{
-//     return{
-//         items: state.itemReducer.items
-//     }
-// }
 
 export default Navigation;
