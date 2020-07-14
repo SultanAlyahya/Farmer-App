@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import {observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from '../Mobx/store'
@@ -8,8 +8,7 @@ import store from '../Mobx/store'
 
 const win = Dimensions.get('window')
 const WRatio = win.width
-const HRatio = win.height
-const WRatio_loginImage = win.width/512
+
 
 const ProfileScreen =observer (({navigation})=> {
     return(
@@ -103,18 +102,5 @@ const ProfileScreen =observer (({navigation})=> {
     )
 })
 
-const styles = StyleSheet.create({
-
-    loginButton:{
-        width:300,
-        height:60,
-        backgroundColor:'#3ba8e7',
-        borderRadius:10,
-        margin:15,
-        justifyContent:'center',
-        marginHorizontal:(WRatio-300)/2,
-        paddingLeft:100
-    },
-})
 
 export default ProfileScreen;

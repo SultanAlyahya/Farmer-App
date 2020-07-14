@@ -12,7 +12,6 @@ const WRation = win.width
 
 const LocationScreen =({navigation})=> {
 
-    const [location, setLocation] = useState(null);
     const [latitude, setLatitude] = useState(null)
     const [longitude, setLongitude] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null);
@@ -27,7 +26,6 @@ const LocationScreen =({navigation})=> {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
       setLatitude(location.coords.latitude)
       setLongitude(location.coords.longitude)
     })();

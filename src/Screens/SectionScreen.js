@@ -197,19 +197,6 @@ const SectionScreen= observer( (props)=>{
   )
 
 })
-
-
-// const mapStateToProps =(state)=>{
-//     //console.log(state.itemReducer.items)
-//     return{
-//         items: state.itemReducer.items
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//       add: (item) => dispatch(addItem(item))
-//     }
-//   }  
+ 
 
 export default SectionScreen;

@@ -30,11 +30,8 @@ const Sections=(props)=>{
 const HomeScreen=observer ((props)=> {
 
   const [search,setSearch] = useState()
-  const [offresNum, setOffersNum] = useState(6)
-  const [sectionsNum, setSectionsNum] = useState(5)
 
   useEffect(() => {
-    //props.add(dameItems)
     store.add(testItems)
   }, []);
 

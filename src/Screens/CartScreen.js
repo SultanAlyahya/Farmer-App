@@ -78,10 +78,5 @@ const styles = StyleSheet.create({
     },
 })
 
-// const mapStateToProps=(state)=>{
-//     return{
-//         items: state.itemReducer.items
-//     }
-// }
 
 export default CartScreen;
