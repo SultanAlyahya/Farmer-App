@@ -3,44 +3,50 @@ import {observable, action, computed} from 'mobx'
 class Store{
 
     @observable text = "Mobx new"
-    @observable list = []
-    @observable token = "non"
+    @observable products = []
+    @observable token = "none"
     @observable isSeller = true
     @observable sellerItems = []
+    @observable renderSection = null
+    @observable renderSellerItems = null
 
 
-    @action add =(list)=>{
-        this.list = list
+    @action addProductsToProductsList =(list)=>{
+        this.products = list
     }
-    @action delete =(id)=>{
-        this.list.forEach((item)=>{
+    @action deleteProductFormCart =(id)=>{
+        this.products.forEach((item)=>{
             if(item.id === id){
                 item.pieces = 0
                 item.select = false
             }
         })
+        this.renderSection = new Date()
     }
-    @action plus =(id)=>{
-        this.list.forEach((item)=>{
+    @action increaseProductItems =(id)=>{
+        this.products.forEach((item)=>{
             if(item.id === id){
                 item.pieces++
             }
         })
+        this.renderSection = new Date()
     }
-    @action minus =(id)=>{
-        this.list.forEach((item)=>{
+    @action decreaseProductItems =(id)=>{
+        this.products.forEach((item)=>{
             if(item.id === id && item.pieces > 1){
                 item.pieces--
             }
         })
+        this.renderSection = new Date()
     }
-    @action select =(id)=>{
-        this.list.forEach((item)=>{
+    @action addProductToCart =(id)=>{
+        this.products.forEach((item)=>{
             if(item.id === id){
                 item.select = true
                 item.pieces = 1
             }
         })
+        this.renderSection = new Date()
     }
     @action changeText =(text)=>{
         this.text = text
@@ -50,14 +56,15 @@ class Store{
     }
     @action deleteSellerItem =(name)=>{
         this.sellerItems = this.sellerItems.filter(item => item.name != name)
+        this.renderSellerItems = new Date()
     }
 
 
-    @computed get items(){
-        return this.list.slice()
+    @computed get getProducts(){
+        return this.products.slice()
     }
-    @computed get selected(){
-        const itemNum = this.list.filter((item)=> item.select)
+    @computed get numOfProductInCart(){
+        const itemNum = this.products.filter((item)=> item.select)
         return itemNum.length
     }
 

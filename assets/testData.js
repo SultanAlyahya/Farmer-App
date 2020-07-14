@@ -138,3 +138,22 @@ export const testItems = [
         id:'6'
     },
 ]
+
+export const testMarkers = [
+    {
+        lat: 24.798077,
+        long: 46.642209,
+        title: 'Panda',
+        description: 'supermarker',
+        imageUri: require('./panda.png'),
+        id:'1'
+    },
+    {
+        lat: 24.8100647,
+        long: 46.6236400,
+        title: 'Alsadhan',
+        description: 'supermarker',
+        imageUri: require("./Alsadhan-farmerApp.png"),
+        id:'2'
+    }
+]

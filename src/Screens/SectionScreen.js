@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, FlatList, Dimensions, Text } from 'react-native';
 import { MaterialCommunityIcons, Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import {observer, Observer} from 'mobx-react'
-import 'mobx-react-lite/batchingForReactNative'
+import { observer } from 'mobx-react'
 import store from '../Mobx/store'
+import 'mobx-react-lite/batchingForReactNative'
 
 
 
-const ItenShort=observer (({name, id, price, pieces, select})=> {
+const ItenShort= ({
+  name,
+  id,
+  price,
+  pieces,
+  select,
+  addProductTocart,
+  deleteProductFormCart,
+  increaseProductItems,
+  decreaseProductItems
+})=> {
 
   const win = Dimensions.get('window')
   const WRation = win.width
@@ -27,7 +37,7 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
 
           <View style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'space-around', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}>
               <TouchableOpacity
-              onPress={()=>store.plus(id)}>
+              onPress={()=>increaseProductItems(id)}>
                   <Entypo name="plus" size={35} color="black" />
               </TouchableOpacity>
               <Text style={{fontSize:30, color:'#33dd33'}}>{pieces}</Text>
@@ -35,14 +45,14 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
               {pieces === 1?
 
               <TouchableOpacity
-              onPress={()=> store.delete(id)}>
+              onPress={()=> deleteProductFormCart(id)}>
                   <MaterialIcons name="delete" size={35} color="black" />
               </TouchableOpacity>
 
               :
 
               <TouchableOpacity
-              onPress={()=>store.minus(id)}>
+              onPress={()=>decreaseProductItems(id)}>
                   <Entypo name="minus" size={35} color="black" />
               </TouchableOpacity>
 
@@ -52,7 +62,7 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
           :
 
           <TouchableOpacity style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}
-          onPress={()=>store.select(id)}>
+          onPress={()=>addProductTocart(id)}>
               <Text style={{fontSize:25, color:'#33dd33'}}>add </Text>
               <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
           </TouchableOpacity>
@@ -61,9 +71,19 @@ const ItenShort=observer (({name, id, price, pieces, select})=> {
           
       </View>
   )
-})
+}
 
-const ItenLong= observer( ({name, id, price, pieces, select})=>{
+const ItenLong =({
+  name,
+  id,
+  price,
+  pieces,
+  select,
+  addProductTocart,
+  deleteProductFormCart,
+  increaseProductItems,
+  decreaseProductItems
+})=> {
   return(
       <View style={{flex:1, marginBottom:5, flexDirection:'row', justifyContent:'space-between',}}>
           <View style={{width:150, height:150, backgroundColor:'#d3d3d3'}}>
@@ -78,8 +98,8 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
           {select?
           <View style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}>
 
-              <TouchableOpacity style={styles.sign}
-              onPress={()=>store.plus(id)}>
+              <TouchableOpacity
+              onPress={()=>increaseProductItems(id)}>
                   <Entypo name="plus" size={35} color="black" />
               </TouchableOpacity>
 
@@ -88,14 +108,14 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
               {pieces === 1?
 
               <TouchableOpacity
-              onPress={()=> store.delete(id)}>
+              onPress={()=> deleteProductFormCart(id)}>
                   <MaterialIcons name="delete" size={35} color="black" />
               </TouchableOpacity>
 
               :
 
-              <TouchableOpacity style={styles.sign}
-              onPress={()=>store.minus(id)}>
+              <TouchableOpacity
+              onPress={()=>decreaseProductItems(id)}>
                   <Entypo name="minus" size={35} color="black" />
               </TouchableOpacity>
 
@@ -106,7 +126,7 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
 
           <TouchableOpacity
           style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}
-          onPress={()=>store.select(id)}>
+          onPress={()=>addProductTocart(id)}>
               <Text style={{fontSize:30, color:'#33dd33'}}>add </Text>
               <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
           </TouchableOpacity>
@@ -115,29 +135,45 @@ const ItenLong= observer( ({name, id, price, pieces, select})=>{
           
       </View>
   )
-})
+}
 
 
 
-const SectionScreen= observer( (props)=>{
+const SectionScreen =observer( ()=>{
 
   const [search,setSearch] = useState()
-  const [sortLong, setSortLong] = useState(false)
+  const [filterLong, setFilterLong] = useState(false)
 
   const header =()=>{
     return(
       <View style={{flexDirection:'row', marginBottom:5}}>
 
-        <TouchableOpacity onPress={()=> setSortLong(false)}>
+        <TouchableOpacity onPress={()=> setFilterLong(false)}>
           <AntDesign name="appstore-o" size={40} color="black" />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> setSortLong(true)}>
+        <TouchableOpacity onPress={()=> setFilterLong(true)}>
           <AntDesign name="bars" size={40} color="black" />
         </TouchableOpacity>
 
       </View>
     )
+  }
+
+  const addProductTocart =(id)=> {
+    store.addProductToCart(id)
+  }
+
+  const deleteProductFormCart =(id)=> {
+    store.deleteProductFormCart(id)
+  }
+
+  const increaseProductItems =(id)=> {
+    store.increaseProductItems(id)
+  }
+
+  const decreaseProductItems =(id)=> {
+    store.decreaseProductItems(id)
   }
 
   return(
@@ -152,12 +188,13 @@ const SectionScreen= observer( (props)=>{
         />
       </View>
       
-      {sortLong?
+      {filterLong?
             
       <FlatList
-      data={store.list}
+      data={store.getProducts}
+      extraData={store.renderSection}
       ListHeaderComponent={header}
-      renderItem={({item, index})=>(<Observer>{()=>
+      renderItem={({item, index})=>
         <ItenLong
           name={item.name}
           price={item.price}
@@ -165,20 +202,25 @@ const SectionScreen= observer( (props)=>{
           select={item.select}
           pieces={item.pieces}
           index={index}
+
+          addProductTocart={addProductTocart}
+          deleteProductFormCart={deleteProductFormCart}
+          increaseProductItems={increaseProductItems}
+          decreaseProductItems={decreaseProductItems}
         />  
-      }</Observer>
-      )}
+      }
       key={('1')}
-      keyExtractor={item => item.name}
+      keyExtractor={item => item.id}
       />
             
       :
             
       <FlatList
-      data={store.list}
+      data={store.getProducts}
+      extraData={store.renderSection}
       numColumns={2}
       ListHeaderComponent={header}
-      renderItem={({item, index})=>(<Observer>{()=>
+      renderItem={({item, index})=>
         <ItenShort
           name={item.name}
           price={item.price}
@@ -186,11 +228,15 @@ const SectionScreen= observer( (props)=>{
           select={item.select}
           pieces={item.pieces}
           index={index}
-        />
-      }</Observer>  
-      )}
+
+          addProductTocart={addProductTocart}
+          deleteProductFormCart={deleteProductFormCart}
+          increaseProductItems={increaseProductItems}
+          decreaseProductItems={decreaseProductItems}
+        />  
+      }
       key={('2')}
-      keyExtractor={item => item.name}
+      keyExtractor={item => item.id}
       />
       }
     </View>

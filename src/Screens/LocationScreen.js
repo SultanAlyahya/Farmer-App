@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MapView, {Marker} from 'react-native-maps';
-import { Text, View, Dimensions, TextInput, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Text, View, Dimensions, TextInput, ScrollView, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import * as Location from 'expo-location';
-import Animated from 'react-native-reanimated';
-
+//import Animated from 'react-native-reanimated';
+import {testMarkers} from '../../assets/testData'
 
 const win = Dimensions.get('window')
 const WRation = win.width
 
-//const showCard  = useRef(new Animated.Value(0)).current;
+
 
 const LocationScreen =({navigation})=> {
 
-    const [latitude, setLatitude] = useState(null)
-    const [longitude, setLongitude] = useState(null)
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [locationSelect, setLocationSelect] = useState('');
+    const [markers, setMarkers] = useState(null);
+    const [currentLocationCard, setCurrentLocationCard] = useState({uri: require("../../assets/Alsadhan-farmerApp.png"), title: '', description: ''})
+    //const [showCard, setShowCard] = useState(false)
+    const [homeMarkerLat, setHomeMarkerLat] = useState(null)
+    const [homeMarkerlong, setHomeMarkerlong] = useState(null)
+
+
 
 
   useEffect(() => {
+   
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
@@ -28,13 +35,52 @@ const LocationScreen =({navigation})=> {
       let location = await Location.getCurrentPositionAsync({});
       setLatitude(location.coords.latitude)
       setLongitude(location.coords.longitude)
+      setHomeMarkerLat(location.coords.latitude)
+      setHomeMarkerlong(location.coords.longitude)
     })();
+    setMarkers(testMarkers)
   },[]);
 
+  const cardAnimation = useRef(new Animated.Value(-200)).current;
+
+  const changLocationCard = ({title, description, uri, lat, long}) => {
+    setLatitude(lat)
+    setLongitude(long)
+    Animated.timing(cardAnimation, {
+      toValue: -200,
+      duration: 300,
+      useNativeDriver: false
+    }).start(async()=>{
+      await setCurrentLocationCard({title, description, uri})
+      Animated.timing(cardAnimation, {
+        toValue: 20,
+        duration: 300,
+        useNativeDriver: false
+      }).start();
+    });
+  };
+
+  const loadMarkers =()=> {
+    return(
+        markers.map((marker)=>
+        <Marker
+        coordinate={{
+          key: marker.id,
+          latitude: marker.lat,
+          longitude: marker.long
+        }}
+        image={require('../../assets/markerStore-farmerApp.png')}
+        title={marker.title}
+        description={marker.description}
+        onSelect={()=> changLocationCard({title: marker.title, description: marker.description, uri: marker.imageUri, lat: marker.lat, long: marker.long})}
+        />
+        )  
+    )
+  }
   
   return (
     <View style={{flex: 1, backgroundColor: '#fff',}}>
-      {longitude && latitude? 
+      {longitude && latitude && homeMarkerLat && homeMarkerlong? 
       <View style={{flex:1}}>
         <MapView style={{flex:1}} 
         region={{
@@ -46,23 +92,14 @@ const LocationScreen =({navigation})=> {
 
           <Marker
           coordinate={{
-            latitude: latitude,
-            longitude: longitude
+            latitude: homeMarkerLat,
+            longitude: homeMarkerlong
               }}
           image={require('../../assets/marker-farmerApp.png')}
           title="Home"
           />
               
-          <Marker
-            coordinate={{
-              latitude: 24.798077,
-              longitude: 46.642209
-              }}
-            image={require('../../assets/markerStore-farmerApp.png')}
-            title="panda"
-            description="supermarker"
-            onSelect={()=> setLocationSelect('panda')}
-            onDeselect={()=> setLocationSelect('')}/>
+          {loadMarkers()}
 
         </MapView>
 
@@ -95,30 +132,33 @@ const LocationScreen =({navigation})=> {
           </ScrollView>
         </View>
 
-        {locationSelect === 'panda'?
+        
           
-        <View style={{width:WRation*0.8, backgroundColor:'#ffffff', marginBottom:20, position:'absolute', bottom:0, marginHorizontal:WRation*0.1, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:WRation*0.05}}>
+        <Animated.View style={[{ width:300, backgroundColor:'#ffffff', position:'absolute', marginHorizontal:(WRation-300)/2, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:20},
+          {
+            bottom: cardAnimation
+          }
+        ]}>
 
           <Image 
-          style={{ width:WRation*0.3, height:WRation*0.3 }}
-          source={require('../../assets/panda.png')}/>
+          style={{ width: 120, height: 120 }}
+          source={currentLocationCard.uri}
+          />
 
           <View>
-            <View style={{marginTop:20, flex:1}}>
-              <Text style={{fontSize: 20}}>panda</Text>
-              <Text style={{fontSize: 20}}>Supermarket</Text>
+            <View style={{marginTop:20}}>
+              <Text style={{fontSize: 20}}>{currentLocationCard.title}</Text>
+              <Text style={{fontSize: 20}}>{currentLocationCard.description}</Text>
             </View>
 
-            <TouchableOpacity style={{flex:1, borderRadius:20, backgroundColor:'#3ba8e7', justifyContent:'center', paddingLeft:15, marginTop:15}}
+            <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', paddingLeft:15, marginTop:15}}
             onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
               <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
             </TouchableOpacity>
 
           </View>
-        </View>
-        :
-        <></>
-        }
+        </Animated.View>
+       
             
       </View>
       :

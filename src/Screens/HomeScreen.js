@@ -9,17 +9,22 @@ import store from '../Mobx/store'
 
 
 
-const Sections=(props)=>{
+const Sections=({
+  backgroundSectionColor,
+  title,
+  logo,
+  goToSectionScreen
+})=>{
   return(
     <TouchableOpacity style={{height: 150, backgroundColor: '#ffffff', borderRadius: 20, flexDirection: 'row', margin: 5}} 
-    onPress={()=> props.navigation.navigate('Section',{pageTitle:props.pageTitle})}>
+    onPress={()=> goToSectionScreen( title )}>
       
       <View style={{width: 90, fontSize: 30, justifyContent: 'center', paddingLeft: 10}}>
-        <Text style={{fontSize: 30}}>{props.logo}</Text>
+        <Text style={{fontSize: 30}}>{logo}</Text>
       </View>
 
-      <View style={{flex:1, backgroundColor: '#22aa22', borderTopRightRadius: 20, borderBottomRightRadius: 20, justifyContent: 'center', paddingLeft: 20, backgroundColor: props.color}}>
-      <Text style={{fontSize: 30}}>{props.title}</Text>
+      <View style={{flex:1, backgroundColor: '#22aa22', borderTopRightRadius: 20, borderBottomRightRadius: 20, justifyContent: 'center', paddingLeft: 20, backgroundColor: backgroundSectionColor}}>
+      <Text style={{fontSize: 30}}>{title}</Text>
     </View>
 
   </TouchableOpacity>
@@ -27,15 +32,15 @@ const Sections=(props)=>{
 }
 
 
-const HomeScreen=observer ((props)=> {
+const HomeScreen=observer (({navigation})=> {
 
   const [search,setSearch] = useState()
 
   useEffect(() => {
-    store.add(testItems)
+    store.addProductsToProductsList(testItems)
   }, []);
 
-  const ListHeaderComponent=(props)=>{
+  const ListHeaderComponent=()=>{
     return(
       <View style={{flex: 1}}>
 
@@ -65,6 +70,10 @@ const HomeScreen=observer ((props)=> {
     )
   }
 
+  const goToSectionScreen =( pageTitle )=> {
+    navigation.navigate('Section',{pageTitle: pageTitle})
+  }
+
 
   return (
     <View style={{flex: 1}}>       
@@ -86,9 +95,8 @@ const HomeScreen=observer ((props)=> {
           <Sections
             title={item.title}
             logo={item.logo}
-            color={item.color}
-            navigation={props.navigation}
-            pageTitle={item.title}
+            backgroundSectionColor={item.color}
+            goToSectionScreen={goToSectionScreen}
           />
         )}
         keyExtractor={item => item.id}      

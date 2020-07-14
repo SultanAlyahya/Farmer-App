@@ -76,7 +76,7 @@ const Navigation = ()=>{
     <Observer>{()=>
       <View style={{ width: 24, height: 24, margin: 5 }}>
         <AntDesign name="shoppingcart" color={color} size={size} />
-          {store.selected > 0 && (
+          {store.numOfProductInCart > 0 && (
           <View
             style={{
               position: 'absolute',
@@ -90,7 +90,7 @@ const Navigation = ()=>{
               alignItems: 'center',
             }}>
             <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-              {store.selected}
+              {store.numOfProductInCart}
             </Text>
           </View>
           )}
