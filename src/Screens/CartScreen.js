@@ -48,7 +48,7 @@ const CartScreen=()=>{
     return(
         <View style={{flex: 1}}>
             <FlatList
-            data={store.list}
+            data={store.items}
             renderItem={({item,index})=>(<Observer>{()=>
             item.select?
             

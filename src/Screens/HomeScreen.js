@@ -59,9 +59,9 @@ const HomeScreen=observer ((props)=> {
         />
 
         
-          <TouchableOpacity style={{marginVertical:5}}>
-            <Text style={{fontSize:30}}>  Sections</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={{marginVertical:5}}>
+          <Text style={{fontSize:30}}>  Sections</Text>
+        </TouchableOpacity>
     
 
       </View>
