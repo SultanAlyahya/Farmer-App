@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import { Text, View, Dimensions, TextInput, ScrollView, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import * as Location from 'expo-location';
-//import Animated from 'react-native-reanimated';
-import {testMarkers} from '../../assets/testData'
+import { testMarkers } from '../../assets/testData';
 
 const win = Dimensions.get('window')
 const WRation = win.width
@@ -39,13 +38,12 @@ const LocationScreen =({navigation})=> {
   const changLocationCard = ({title, description, uri, lat, long}) => {
     Animated.timing(cardAnimation, {
       toValue: -200,
-      duration: 300,
+      duration: 200,
       useNativeDriver: false
     }).start(async()=>{
       await setCurrentLocationCard({title, description, uri})
-      Animated.timing(cardAnimation, {
+      Animated.spring(cardAnimation, {
         toValue: 20,
-        duration: 300,
         useNativeDriver: false
       }).start();
     });
@@ -138,7 +136,7 @@ const LocationScreen =({navigation})=> {
           />
 
           <View>
-            <View style={{marginTop:20}}>
+            <View style={{marginTop:20, marginLeft:20}}>
               <Text style={{fontSize: 20}}>{currentLocationCard.title}</Text>
               <Text style={{fontSize: 20}}>{currentLocationCard.description}</Text>
             </View>
