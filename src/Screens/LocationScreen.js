@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MapView, {Marker} from 'react-native-maps';
-import { Text, View, Dimensions, TextInput, ScrollView, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
+import { Text, View, Dimensions, TextInput, ScrollView, TouchableOpacity, Image, ActivityIndicator, Animated, Navigator } from 'react-native';
 import * as Location from 'expo-location';
 import { testMarkers } from '../../assets/testData';
 
@@ -30,34 +30,48 @@ const LocationScreen =({navigation})=> {
       let location = await Location.getCurrentPositionAsync({});
       setLocation({lat: location.coords.latitude, long: location.coords.longitude})
     })();
-    setMarkers(testMarkers)
+    setMarkers(testMarkers) 
   },[]);
 
-  const cardAnimation = useRef(new Animated.Value(-200)).current;
+  const initialRender = useRef(true);
 
-  const changLocationCard = ({title, description, uri, lat, long}) => {
-    Animated.timing(cardAnimation, {
-      toValue: -200,
-      duration: 200,
-      useNativeDriver: false
-    }).start(async()=>{
-      await setCurrentLocationCard({title, description, uri})
+  useEffect(()=>{
+    if(initialRender.current){
+      initialRender.current = false
+    }
+    else{
       Animated.spring(cardAnimation, {
-        toValue: 20,
-        useNativeDriver: false
+        toValue: -180,
+        useNativeDriver: true
       }).start();
+    }
+  }, [currentLocationCard])
+
+
+
+  const cardAnimation = useRef(new Animated.Value(0)).current;
+
+  const changLocationCard = ({title, description, uri}) => {
+    Animated.timing(cardAnimation, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true
+    }).start(()=>{
+      setCurrentLocationCard({title, description, uri})
+      
     });
   };
 
   const loadMarkers =()=> {
     return(
-        markers.map((marker)=>
+        markers.map((marker, index)=>
         <Marker
         coordinate={{
-          key: marker.id+''+marker.title,
+          key: marker.id,
           latitude: marker.lat,
           longitude: marker.long
         }}
+        key={marker.id}
         image={require('../../assets/markerStore-farmerApp.png')}
         title={marker.title}
         description={marker.description}
@@ -124,24 +138,22 @@ const LocationScreen =({navigation})=> {
 
         
           
-        <Animated.View style={[{ width:300, backgroundColor:'#ffffff', position:'absolute', marginHorizontal:(WRation-300)/2, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:20},
-          {
-            bottom: cardAnimation
-          }
+        <Animated.View style={[{ width:300, backgroundColor:'#ffffff', position:'absolute', marginHorizontal:(WRation-300)/2, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:20, bottom: -170},
+          {transform: [{translateY: cardAnimation}]}
         ]}>
 
           <Image 
-          style={{ width: 120, height: 120 }}
+          style={{ width: 120, height: 120, marginRight:10 }}
           source={currentLocationCard.uri}
           />
 
-          <View>
-            <View style={{marginTop:20, marginLeft:20}}>
+          <View style={{justifyContent:'center'}}>
+            <View style={{marginLeft:20}}>
               <Text style={{fontSize: 20}}>{currentLocationCard.title}</Text>
               <Text style={{fontSize: 20}}>{currentLocationCard.description}</Text>
             </View>
 
-            <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', paddingLeft:15, marginTop:15}}
+            <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', alignItems:'center'}}
             onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
               <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
             </TouchableOpacity>

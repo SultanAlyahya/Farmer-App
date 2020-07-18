@@ -26,7 +26,7 @@ const ItemsInCart= ({
             Animated.timing(deleteButtonWidth,
             { 
                 toValue: 0,
-                useNativeDriver: false,
+                useNativeDriver: true,
                 duration:200
             },
             moveDeleteReady = false,
@@ -46,8 +46,8 @@ const ItemsInCart= ({
                         if(pan._value<-50)
                             Animated.timing(deleteButtonWidth,
                             { 
-                                toValue: 60,
-                                useNativeDriver: false,
+                                toValue: -60,
+                                useNativeDriver: true,
                                 duration:200
                             },
                             moveDeleteReady = true
@@ -105,10 +105,8 @@ const ItemsInCart= ({
                     <MaterialIcons name="delete" size={50} color="black" />
                 </TouchableOpacity>
             
-                <Animated.View style={[{  backgroundColor:'#dd2222', position:'absolute', borderTopLeftRadius:20, borderBottomLeftRadius:20, flexDirection:'row', height: '100%', right:0},
-                {
-                width: deleteButtonWidth
-                }
+                <Animated.View style={[{  backgroundColor:'#dd2222', position:'absolute', borderTopLeftRadius:20, borderBottomLeftRadius:20, flexDirection:'row', height: '100%', right:-60},
+                {transform: [{translateX: deleteButtonWidth}]}
                 ]}>
                     <TouchableOpacity style={{flex: 1, justifyContent:'center'}}
                     onPress={()=> deleteProductFormCart(id)}>
