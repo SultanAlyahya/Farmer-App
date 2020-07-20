@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, TextInput, TouchableOpacity, FlatList, Image, Dimensions, Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import {testSections} from '../../assets/testData'
 import {testOffers} from '../../assets/testData'
 import {testItems} from '../../assets/testData'
@@ -7,6 +8,9 @@ import {observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from '../Mobx/store'
 
+
+const win = Dimensions.get('window')
+const HRatio = win.height
 
 
 const Sections=({
@@ -16,18 +20,28 @@ const Sections=({
   goToSectionScreen
 })=>{
   return(
-    <TouchableOpacity style={{height: 150, backgroundColor: '#ffffff', borderRadius: 20, flexDirection: 'row', margin: 5}} 
-    onPress={()=> goToSectionScreen( title )}>
-      
-      <View style={{width: 90, fontSize: 30, justifyContent: 'center', paddingLeft: 10}}>
-        <Text style={{fontSize: 30}}>{logo}</Text>
-      </View>
+    
+      <TouchableOpacity style={{height: 150, backgroundColor: '#ffffff', borderRadius: 20, flexDirection: 'row', margin: 5}} 
+      onPress={()=> goToSectionScreen( title )}>
+        
+        <View style={{width: 120, fontSize: 30, justifyContent: 'center', paddingLeft: 10}}>
+          <Text style={{fontSize: 20}}>{title}</Text>
+        </View>
 
-      <View style={{flex:1, backgroundColor: '#22aa22', borderTopRightRadius: 20, borderBottomRightRadius: 20, justifyContent: 'center', paddingLeft: 20, backgroundColor: backgroundSectionColor}}>
-      <Text style={{fontSize: 30}}>{title}</Text>
-    </View>
+        {/* <View style={{flex:1, backgroundColor: '#22aa22', borderTopRightRadius: 20, borderBottomRightRadius: 20, justifyContent: 'center', paddingLeft: 20, backgroundColor: backgroundSectionColor}}>
+          <Text style={{fontSize: 30}}>{title}</Text>
+        </View> */}
 
-  </TouchableOpacity>
+        <View style={{flex:1,}}>
+          <Image
+            style={{width:'100%', height:'100%', borderTopRightRadius: 20, borderBottomRightRadius: 20}}
+            source={require('../../assets/fruit-farmerApp.jpg')}/>
+        </View>
+        <LinearGradient
+            colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.1)', 'rgba(0,0,0,0.2)', 'rgba(0,0,0,0.5)', 'rgba(0,0,0,1)']}
+            style={{position:'absolute', width:'100%', height:'100%'}}/>
+
+    </TouchableOpacity>
   );
 }
 
@@ -35,6 +49,24 @@ const Sections=({
 const HomeScreen=observer (({navigation})=> {
 
   const [search,setSearch] = useState()
+
+  const ratingPageValue = useRef( new Animated.Value(0)).current
+
+  const moveRatingPageUp =()=>{
+    Animated.timing(ratingPageValue,{
+      toValue: -HRatio,
+      duration: 500,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const moveRatingPageDown =()=>{
+    Animated.timing(ratingPageValue,{
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true
+    }).start()
+  }
 
   useEffect(() => {
     store.addProductsToProductsList(testItems)
@@ -45,7 +77,7 @@ const HomeScreen=observer (({navigation})=> {
       <View style={{flex: 1}}>
 
         <TouchableOpacity style={{marginVertical: 5}}>
-          <Text style={{fontSize: 30}}>  New offers</Text>
+          <Text style={{fontSize: 30, color:'#33dd33'}}>  New offers</Text>
         </TouchableOpacity>
         
 
@@ -62,11 +94,39 @@ const HomeScreen=observer (({navigation})=> {
 
         
         <TouchableOpacity style={{marginVertical:5}}>
-          <Text style={{fontSize:30}}>  Sections</Text>
+          <Text style={{fontSize:30, color:'#33dd33'}}>  Sections</Text>
         </TouchableOpacity>
     
 
       </View>
+    )
+  }
+
+  const RatingPage =()=> {
+    return(
+      <Animated.View style={[{width:'100%', height:'100%', position:'absolute', bottom:-HRatio},
+      {transform: [{translateY: ratingPageValue}]}
+      ]}>
+        <TouchableOpacity style={{height:200, width:'100%', opacity:0}}
+        onPress={()=>moveRatingPageDown()}/>
+
+        <View style={{flex:1, backgroundColor:'#222222', borderTopLeftRadius:20, borderTopRightRadius:20}}>
+          <Text style={{fontSize: 30, color:'#33dd33', margin:20}}>please rate out services</Text>
+          <TouchableOpacity style={{margin:30, justifyContent:'center', alignItems:'center', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10}}
+           onPress={()=>moveRatingPageDown()}>
+            <Text style={{fontSize: 30, color:'#33dd33'}}>good</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    )
+  }
+
+  const ListFooterComponent =()=> {
+    return(
+      <TouchableOpacity style={{margin:30, justifyContent:'center', alignItems:'center', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10}}
+      onPress={()=>moveRatingPageUp()}>
+        <Text style={{fontSize: 30, color:'#33dd33'}}>rate our services</Text>
+      </TouchableOpacity>
     )
   }
 
@@ -76,7 +136,7 @@ const HomeScreen=observer (({navigation})=> {
 
 
   return (
-    <View style={{flex: 1}}>       
+    <View style={{flex: 1, backgroundColor:'#000000'}}>       
 
       <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10}}>
         <TextInput 
@@ -89,6 +149,7 @@ const HomeScreen=observer (({navigation})=> {
       
       <FlatList
         ListHeaderComponent={ListHeaderComponent}
+        ListFooterComponent={ListFooterComponent}
         style={{flex:1}}
         data={testSections}
         renderItem={({ item }) => (
@@ -101,7 +162,7 @@ const HomeScreen=observer (({navigation})=> {
         )}
         keyExtractor={item => item.id}      
       />
-        
+      <RatingPage/>
     </View>
   );
 })

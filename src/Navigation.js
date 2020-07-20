@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, AntDesign, Octicons, FontAwesome } from '@expo/vector-icons';
-import {Observer} from 'mobx-react'
+import {Observer, observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
 import store from './Mobx/store'
 
@@ -19,6 +19,7 @@ import AddItem from './Screens/AddItemScreen'
 import DeleteItem from './Screens/DeleteItemScreen'
 import Statistics from './Screens/StatisticsScreen'
 import LocationScreen from './Screens/LocationScreen'
+import WelcomeScreen from './Screens/WelcomeScreen'
 
 
 
@@ -28,7 +29,7 @@ const Tab = createBottomTabNavigator()
 const HomeScreens=()=> {
   return (  
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{headerTitle:"Farmer", headerStyle:{backgroundColor:'#33dd33'}}} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerTitle:"Farmer", headerStyle:{backgroundColor:'#33dd33'}, animationTypeForReplace: 'push'}} />
       <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
     </Stack.Navigator>
     
@@ -70,7 +71,15 @@ const LocationScreens =()=> {
   )
 }
 
-const Navigation = ()=>{
+const WelcomeScreens =()=> {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="welcome" component={WelcomeScreen} options={{animationTypeForReplace: 'pop', headerShown: false}}/>
+    </Stack.Navigator>
+  )
+}
+
+const Navigation = observer( ()=>{
 
   const IconWithBadge=({ color, size }) =>(
     <Observer>{()=>
@@ -101,12 +110,18 @@ const Navigation = ()=>{
       
   return(
     <NavigationContainer>
+    {store.isWelcomeScreen?
+     
+      <WelcomeScreens/>
+     
+    :
       <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
 
         <Tab.Screen name="Home"  component={HomeScreens} options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-home" color={color} size={size} />
           ),
+          
         }}
         />
 
@@ -137,9 +152,12 @@ const Navigation = ()=>{
         />
         
       </Tab.Navigator>
+    }
     </NavigationContainer>
+    
+    
   );
-}
+})
 
 
 export default Navigation;

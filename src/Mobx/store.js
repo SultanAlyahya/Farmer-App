@@ -9,6 +9,7 @@ class Store{
     @observable sellerItems = []
     @observable renderSection = null
     @observable renderSellerItems = null
+    @observable isWelcomeScreen = true
 
 
     @action addProductsToProductsList =(list)=>{
