@@ -87,8 +87,8 @@ const LocationScreen =({navigation})=> {
       <View style={{flex:1}}>
         <MapView style={{flex:1}}
         initialRegion={{
-            latitude: location.lat,
-            longitude: location.long,
+            latitude: 24.802731,
+            longitude: 46.634732,
             longitudeDelta: 0.015,
             latitudeDelta: 0.020
         }}
