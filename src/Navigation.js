@@ -30,7 +30,6 @@ const HomeScreens=()=> {
   return (  
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} options={{headerTitle:"Farmer", headerStyle:{backgroundColor:'#33dd33'}, animationTypeForReplace: 'push'}} />
-      <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
     </Stack.Navigator>
     
   );
@@ -79,7 +78,7 @@ const WelcomeScreens =()=> {
   )
 }
 
-const Navigation = observer( ()=>{
+const TabNavigator =()=> {
 
   const IconWithBadge=({ color, size }) =>(
     <Observer>{()=>
@@ -106,16 +105,10 @@ const Navigation = observer( ()=>{
       </View>
     }</Observer>
   );
-      
-      
+
+
   return(
-    <NavigationContainer>
-    {store.isWelcomeScreen?
-     
-      <WelcomeScreens/>
-     
-    :
-      <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
+    <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
 
         <Tab.Screen name="Home"  component={HomeScreens} options={{
           tabBarIcon: ({ color, size }) => (
@@ -152,7 +145,22 @@ const Navigation = observer( ()=>{
         />
         
       </Tab.Navigator>
-    }
+  )
+}
+
+const Navigation = observer( ()=>{
+      
+      
+  return(
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="welcome" component={WelcomeScreen} options={{animationTypeForReplace: 'pop', headerShown: false}}/>
+
+        <Stack.Screen name="tabNavigation" component={TabNavigator} options={{headerShown: false}}/>
+
+        <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
+
+      </Stack.Navigator>
     </NavigationContainer>
     
     

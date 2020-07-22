@@ -218,6 +218,7 @@ const SectionScreen =observer( ()=>{
       <FlatList
       data={store.getProducts}
       extraData={store.renderSection}
+      ListFooterComponent={()=> <View style={{height:50}}></View>}
       numColumns={2}
       ListHeaderComponent={header}
       renderItem={({item, index})=>
