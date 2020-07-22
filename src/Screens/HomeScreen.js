@@ -112,7 +112,7 @@ const HomeScreen=observer (({navigation})=> {
 
         <View style={{flex:1, backgroundColor:'#222222', borderTopLeftRadius:20, borderTopRightRadius:20}}>
           <Text style={{fontSize: 30, color:'#33dd33', margin:20}}>please rate out services</Text>
-          <TouchableOpacity style={{margin:30, justifyContent:'center', alignItems:'center', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10}}
+          <TouchableOpacity style={{margin:30, justifyContent:'center', flexDirection:'row', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10}}
            onPress={()=>moveRatingPageDown()}>
             <Text style={{fontSize: 30, color:'#33dd33'}}>good</Text>
           </TouchableOpacity>
@@ -123,7 +123,7 @@ const HomeScreen=observer (({navigation})=> {
 
   const ListFooterComponent =()=> {
     return(
-      <TouchableOpacity style={{margin:30, justifyContent:'center', alignItems:'center', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10}}
+      <TouchableOpacity style={{margin:30, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', padding: 15, borderRadius:10, flexDirection:'row'}}
       onPress={()=>moveRatingPageUp()}>
         <Text style={{fontSize: 30, color:'#33dd33'}}>rate our services</Text>
       </TouchableOpacity>

@@ -90,7 +90,7 @@ const ItenLong =({
               
           </View>
 
-          <View style={{justifyContent:'space-around', alignItems:'center'}}>
+          <View style={{justifyContent:'space-around'}}>
               <Text style={{fontSize:25}}>{name}</Text>
               <Text style={{fontSize:20}}>Price: {price} SR</Text>
           </View>

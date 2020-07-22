@@ -153,7 +153,7 @@ const LocationScreen =({navigation})=> {
               <Text style={{fontSize: 20}}>{currentLocationCard.description}</Text>
             </View>
 
-            <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', alignItems:'center'}}
+            <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', flexDirection:'row'}}
             onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
               <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
             </TouchableOpacity>
