@@ -85,9 +85,6 @@ const LocationScreen =({navigation})=> {
   return (
     <View style={{flex: 1, backgroundColor: '#fff',}}>
 
-      <View style={{justifyContent: 'center', flexDirection: 'row', padding: 20, paddingTop: 40, backgroundColor: '#3d3'}}>
-        <Text style={{fontSize: 30}}>Locatoin</Text>
-      </View>
 
       {location? 
       <View style={{flex:1}}>
@@ -113,7 +110,7 @@ const LocationScreen =({navigation})=> {
 
         </MapView>
 
-        <View style={{position: 'absolute', top: 20,}}>
+        <View style={{position: 'absolute', top: 50,}}>
 
           <TextInput
           style={{marginHorizontal: 20, marginBottom: 10, height: 50, backgroundColor: '#ffffff', borderRadius: 10, paddingLeft: 10, fontSize: 20}}
