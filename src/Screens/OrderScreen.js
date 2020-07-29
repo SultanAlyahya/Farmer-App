@@ -50,6 +50,9 @@ const OrderScreen =()=> {
     return(
         
         <View style={{flex: 1}}>
+            <View style={{justifyContent: 'center', flexDirection: 'row', padding: 20, paddingTop: 40, backgroundColor: '#3d3'}}>
+                <Text style={{fontSize: 30}}>Orders</Text>
+            </View>
             {login?
                 <View>
                     

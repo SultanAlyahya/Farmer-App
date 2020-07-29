@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,30 +26,6 @@ import WelcomeScreen from './Screens/WelcomeScreen'
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
-const HomeScreens=()=> {
-  return (  
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{headerTitle:"Farmer", headerStyle:{backgroundColor:'#33dd33'}, animationTypeForReplace: 'push'}} />
-    </Stack.Navigator>
-    
-  );
-}
-
-const OrderScreens=()=>{
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="your orders" component={OrderScreen} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}} /> 
-    </Stack.Navigator>
-  )
-}
-
-const CartScreens=()=>{
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="cart" component={CartScreen} options={{headerTitle:"Cart", headerStyle:{backgroundColor:'#33dd33'}}} /> 
-    </Stack.Navigator>
-  )
-}
 const ProfileScreens=()=>{
   return(
     <Stack.Navigator>
@@ -58,22 +34,6 @@ const ProfileScreens=()=>{
       <Stack.Screen name="addItem" component={AddItem} options={{headerTitle:"Add Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="deleteItem" component={DeleteItem} options={{headerTitle:"delete Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="statistics" component={Statistics} options={{headerTitle:"Statistics", headerStyle:{backgroundColor:'#3ba8e7'}}} />  
-    </Stack.Navigator>
-  )
-}
-
-const LocationScreens =()=> {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="location" component={LocationScreen} options={{headerTitle:"Orders", headerStyle:{backgroundColor:'#33dd33'}}}/>
-    </Stack.Navigator>
-  )
-}
-
-const WelcomeScreens =()=> {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="welcome" component={WelcomeScreen} options={{animationTypeForReplace: 'pop', headerShown: false}}/>
     </Stack.Navigator>
   )
 }
@@ -110,27 +70,26 @@ const TabNavigator =()=> {
   return(
     <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
 
-        <Tab.Screen name="Home"  component={HomeScreens} options={{
+        <Tab.Screen name="Home"  component={HomeScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-home" color={color} size={size} />
           ),
-          
         }}
         />
 
-        <Tab.Screen name="Cart" component={CartScreens} options={{
+        <Tab.Screen name="Cart" component={CartScreen} options={{
           tabBarIcon: IconWithBadge
         }}
         />
 
-        <Tab.Screen name="location" component={LocationScreens} options={{
+        <Tab.Screen name="location" component={LocationScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="map-marker" color={color} size={size} />
           ),
         }}
         />
 
-        <Tab.Screen name="Orders" component={OrderScreens} options={{
+        <Tab.Screen name="Orders" component={OrderScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Octicons name="list-unordered" color={color} size={size} />
           ),
@@ -148,12 +107,13 @@ const TabNavigator =()=> {
   )
 }
 
-const Navigation = observer( ()=>{
-      
+const Navigation = observer( ({logedin})=>{
+      console.log("logedin",logedin)
       
   return(
     <NavigationContainer>
-      <Stack.Navigator>
+      
+      <Stack.Navigator initialRouteName={logedin? "tabNavigation": "welcome"}>
         <Stack.Screen name="welcome" component={WelcomeScreen} options={{animationTypeForReplace: 'pop', headerShown: false}}/>
 
         <Stack.Screen name="tabNavigation" component={TabNavigator} options={{headerShown: false}}/>
@@ -161,6 +121,7 @@ const Navigation = observer( ()=>{
         <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
 
       </Stack.Navigator>
+ 
     </NavigationContainer>
     
     

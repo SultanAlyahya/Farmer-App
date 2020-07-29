@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import 'mobx-react-lite/batchingForReactNative'
+import userStore from '../Mobx/userStore'
+import {saveUserData} from '../db/userdb'
 
 const win = Dimensions.get('window')
 const WRatio = win.width
 
-function LoginScreen({navigation}){
+function LoginScreen({navigation, route}){
 
     const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    
+    const login =async(user)=> {
+        try{
+        console.log(route.params?.isSeller)
+        await userStore.login(user)
+        
+        navigation.goBack()
+        }catch(error){
+            console.log(error)
+        }
+        
+    }
 
     return(
         <View style={{ flex:1, justifyContent: 'center', backgroundColor: '#dddddd'}}>
@@ -38,7 +53,7 @@ function LoginScreen({navigation}){
                     secureTextEntry={true}/>
 
                     <TouchableOpacity style={{height:60, marginHorizontal:50, backgroundColor:'#3ba8e7', marginTop:40, borderRadius:10, justifyContent:'center', paddingLeft:100,}}
-                    onPress={()=> navigation.navigate('profile')}>
+                    onPress={()=> login({name: name, token: "sultan", isSeller: route.params?.isSeller || false})}>
                         <Text style={{fontSize:35, color:'#ffffff'}}>login</Text>
                     </TouchableOpacity>
                 </View>

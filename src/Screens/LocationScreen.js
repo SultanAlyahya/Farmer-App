@@ -6,7 +6,8 @@ import { testMarkers } from '../../assets/testData';
 
 const win = Dimensions.get('window')
 const WRation = win.width
-
+const cardWidth = WRation -50
+const cardHeight = cardWidth/3+50
 
 
 const LocationScreen =({navigation})=> {
@@ -83,6 +84,11 @@ const LocationScreen =({navigation})=> {
   
   return (
     <View style={{flex: 1, backgroundColor: '#fff',}}>
+
+      <View style={{justifyContent: 'center', flexDirection: 'row', padding: 20, paddingTop: 40, backgroundColor: '#3d3'}}>
+        <Text style={{fontSize: 30}}>Locatoin</Text>
+      </View>
+
       {location? 
       <View style={{flex:1}}>
         <MapView style={{flex:1}}
@@ -138,12 +144,12 @@ const LocationScreen =({navigation})=> {
 
         
           
-        <Animated.View style={[{ width:300, backgroundColor:'#ffffff', position:'absolute', marginHorizontal:(WRation-300)/2, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:20, bottom: -170},
+        <Animated.View style={[{ width: cardWidth, height: cardHeight, backgroundColor:'#ffffff', position:'absolute', marginHorizontal: 25, borderRadius:20, flexDirection:'row', justifyContent:'space-around', padding:20, bottom: -cardHeight},
           {transform: [{translateY: cardAnimation}]}
         ]}>
 
           <Image 
-          style={{ width: 120, height: 120, marginRight:10 }}
+          style={{ width: cardWidth/3, height: cardWidth/3, marginRight:10 }}
           source={currentLocationCard.uri}
           />
 
@@ -154,7 +160,7 @@ const LocationScreen =({navigation})=> {
             </View>
 
             <TouchableOpacity style={{ borderRadius:10, backgroundColor:'#3ba8e7', justifyContent:'center', flexDirection:'row'}}
-            onPress={()=> navigation.navigate('Section',{pageTitle:'panda'})}>
+            onPress={()=> navigation.navigate('Section',{pageTitle: currentLocationCard.title})}>
               <Text style={{fontSize: 30, color: '#ffffff'}}>Shop</Text>
             </TouchableOpacity>
 

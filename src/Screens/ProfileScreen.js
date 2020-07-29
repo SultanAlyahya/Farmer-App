@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import {observer} from 'mobx-react'
 import 'mobx-react-lite/batchingForReactNative'
-import store from '../Mobx/store'
+import userStore from '../Mobx/userStore'
+import store from '../Mobx/store';
 
 
 
@@ -11,6 +12,20 @@ const WRatio = win.width
 
 
 const ProfileScreen =observer (({navigation})=> {
+
+    useEffect(()=>{
+        console.log(userStore.isSeller)
+    })
+
+    const logout =async()=>{
+        try{
+            await userStore.logout()
+            navigation.goBack()
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     return(
         <View style={{flex:1, backgroundColor:'#ffffff',}}>
             <View style={{width:'100%', height:200, backgroundColor:'#3ba8e7', position:'absolute',}}></View>
@@ -20,7 +35,7 @@ const ProfileScreen =observer (({navigation})=> {
                 source={require('../../assets/loginImage.png')}
             />
             </View>
-            {store.token !== "none"?
+            {userStore.token === ""?
             <View style={{flex:1}}>
             
             
@@ -29,13 +44,13 @@ const ProfileScreen =observer (({navigation})=> {
 
             <TouchableOpacity
                 style={{width:300, height:60, backgroundColor:'#3ba8e7', borderRadius:10, margin:15, justifyContent:'center', marginHorizontal:(WRatio-300)/2, paddingLeft:130}}
-                onPress={()=> navigation.navigate('login')}>
+                onPress={()=> navigation.navigate('login', {isSeller: false})}>
                     <Text style={{fontSize:20, color:'#ffffff'}}>login</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={{width:300, height:60, backgroundColor:'#3ba8e7', borderRadius:10, margin:15, justifyContent:'center', marginHorizontal:(WRatio-300)/2, paddingLeft:90}}
-                onPress={()=> navigation.navigate('login')}>
+                onPress={()=> navigation.navigate('login', {isSeller: true})}>
                     <Text style={{fontSize:20, color:'#ffffff'}}>login as seller</Text>
             </TouchableOpacity>
             </View>
@@ -60,8 +75,9 @@ const ProfileScreen =observer (({navigation})=> {
                     <TouchableOpacity style={{height:60, borderBottomWidth:1, borderColor:'#000000', justifyContent:'center'}}>
                     <Text style={{fontSize:20, marginLeft:10}}>Edit location</Text>
                     </TouchableOpacity>
+                    
 
-                    {store.isSeller?
+                    {userStore.isSeller?
 
                     <>
                         <Text style={{fontSize:25, margin:20}}>seller section</Text>
@@ -85,15 +101,17 @@ const ProfileScreen =observer (({navigation})=> {
                         <Text style={{fontSize:20, marginLeft:10}}>delete item</Text>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity style={{height:70, width:300, borderColor:'#000000', borderWidth:1, justifyContent:'center', marginTop:20, marginHorizontal:(WRatio-300)/2, backgroundColor:'#3ba8e7', paddingLeft:100}}>
-                            <Text style={{fontSize:30, color:'#ffffff'}}>logout</Text>
-                        </TouchableOpacity>
+                        
                     </>
 
                     :
                     <>
                     </>
                     }
+                    <TouchableOpacity style={{height:70, width:300, borderColor:'#000000', borderWidth:1, justifyContent:'center', marginTop:20, marginHorizontal:(WRatio-300)/2, backgroundColor:'#3ba8e7', paddingLeft:100}}
+                        onPress={()=> logout()}>
+                            <Text style={{fontSize:30, color:'#ffffff'}}>logout</Text>
+                    </TouchableOpacity>
                 </ScrollView>
                 </View>
             </>

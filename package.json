@@ -17,6 +17,7 @@
     "expo-image-picker": "~8.3.0",
     "expo-linear-gradient": "~8.2.1",
     "expo-location": "~8.2.1",
+    "expo-splash-screen": "^0.3.1",
     "expo-status-bar": "^1.0.2",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",

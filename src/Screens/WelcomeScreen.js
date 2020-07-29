@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View, ImageBackground, TouchableOpacity, Text } from 'react-native'
+import * as SplashScreen from 'expo-splash-screen';
 import store from '../Mobx/store'
 
 const WelcomeScreen =({navigation})=> {
+    useEffect(()=>{
+        (async()=>{
+            await SplashScreen.hideAsync()
+        })()
+    }, [])
     return(
         <View style={{flex:1}}>
             <ImageBackground

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, TextInput, TouchableOpacity, FlatList, Image, Dimensions, Animated } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as SplashScreen from 'expo-splash-screen';
 import {testSections} from '../../assets/testData'
 import {testOffers} from '../../assets/testData'
 import {testItems} from '../../assets/testData'
@@ -69,7 +70,10 @@ const HomeScreen=observer (({navigation})=> {
   }
 
   useEffect(() => {
-    store.addProductsToProductsList(testItems)
+    store.addProductsToProductsList(testItems);
+    (async()=>{
+      await SplashScreen.hideAsync()
+    })()
   }, []);
 
   const ListHeaderComponent=()=>{
@@ -138,7 +142,7 @@ const HomeScreen=observer (({navigation})=> {
   return (
     <View style={{flex: 1, backgroundColor:'#000000'}}>       
 
-      <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10}}>
+      <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10, paddingTop: 50}}>
         <TextInput 
           style={{backgroundColor: '#ffffff', height: 50, borderWidth: 0.5, borderColor: '#000000', borderRadius: 10, fontSize: 25, paddingLeft: 10, marginBottom: 5}}
           onChangeText={text => setSearch(text)}

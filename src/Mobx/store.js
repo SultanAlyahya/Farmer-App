@@ -4,8 +4,6 @@ class Store{
 
     @observable text = "Mobx new"
     @observable products = []
-    @observable token = "none"
-    @observable isSeller = true
     @observable sellerItems = []
     @observable renderSection = null
     @observable renderSellerItems = null
