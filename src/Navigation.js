@@ -30,7 +30,6 @@ const ProfileScreens=()=>{
   return(
     <Stack.Navigator>
       <Stack.Screen name="profile" component={ProfileScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
-      <Stack.Screen name="login" component={LoginScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="addItem" component={AddItem} options={{headerTitle:"Add Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="deleteItem" component={DeleteItem} options={{headerTitle:"delete Item", headerStyle:{backgroundColor:'#3ba8e7'}}} />
       <Stack.Screen name="statistics" component={Statistics} options={{headerTitle:"Statistics", headerStyle:{backgroundColor:'#3ba8e7'}}} />  
@@ -108,7 +107,7 @@ const TabNavigator =()=> {
 }
 
 const Navigation = observer( ({logedin})=>{
-      console.log("logedin",logedin)
+      console.log("loggedin",logedin)
       
   return(
     <NavigationContainer>
@@ -119,6 +118,8 @@ const Navigation = observer( ({logedin})=>{
         <Stack.Screen name="tabNavigation" component={TabNavigator} options={{headerShown: false}}/>
 
         <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
+
+        <Stack.Screen name="login" component={LoginScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
 
       </Stack.Navigator>
  

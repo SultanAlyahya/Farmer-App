@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Text, View, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import {testOrders} from '../../assets/testData'
+import {observer} from 'mobx-react'
+import userStore from '../Mobx/userStore'
+import 'mobx-react-lite/batchingForReactNative'
 
 const win = Dimensions.get('window');
 const WRatio_loginImage = win.width/512
@@ -43,9 +46,8 @@ const OrdersInfo =({
 }
 
 
-const OrderScreen =()=> {
+const OrderScreen =observer( ({navigation})=> {
 
-    const [login, setLogin] = useState(false)
 
     return(
         
@@ -53,7 +55,7 @@ const OrderScreen =()=> {
             <View style={{justifyContent: 'center', flexDirection: 'row', padding: 20, paddingTop: 40, backgroundColor: '#3d3'}}>
                 <Text style={{fontSize: 30}}>Orders</Text>
             </View>
-            {login?
+            {userStore.token !== ''?
                 <View>
                     
                     <FlatList
@@ -83,7 +85,7 @@ const OrderScreen =()=> {
 
                     <TouchableOpacity
                     style={{ height:60, backgroundColor:'#3ba8e7', borderRadius:10, margin:20, justifyContent:'center', paddingLeft:(WRatio-100)/2}}
-                    onPress={()=>setLogin(true)}>
+                    onPress={()=> navigation.navigate('login', {isSeller: false})}>
                         <Text style={{fontSize:35, color:'#ffffff'}}>login</Text>
                     </TouchableOpacity>
 
@@ -91,6 +93,6 @@ const OrderScreen =()=> {
             }
         </View>
     )
-}
+})
 
 export default OrderScreen

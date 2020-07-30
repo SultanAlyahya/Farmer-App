@@ -24,7 +24,7 @@ class UserStore{
     @action login =async(user)=> {
         try{
             this.token = user.token
-            this.name = user.name
+            this.userName = user.name
             this.isSeller = user.isSeller
             await saveUserData(user)
             return true
@@ -36,7 +36,7 @@ class UserStore{
         try{
             await deleteUserInfo()
             this.token = ""
-            this.name = ""
+            this.userName = ""
             this.isSeller = false
             return true
         }catch(error){

@@ -20,7 +20,6 @@ const ProfileScreen =observer (({navigation})=> {
     const logout =async()=>{
         try{
             await userStore.logout()
-            navigation.goBack()
         }catch(error){
             console.log(error)
         }

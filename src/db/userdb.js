@@ -32,7 +32,7 @@ export const deleteUserInfo =async()=>{
        await AsyncStorage.removeItem(USER_KEY)
         return true
     }catch(error){
-        console.log('fail to login')
+        console.log('fail to logout')
         return false
     }
 
