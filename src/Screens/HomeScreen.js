@@ -142,7 +142,7 @@ const HomeScreen=observer (({navigation})=> {
   return (
     <View style={{flex: 1, backgroundColor:'#000000'}}>       
 
-      <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10, paddingTop: 50}}>
+      <View style={{backgroundColor: '#33dd33', justifyContent: 'center', paddingHorizontal: 10}}>
         <TextInput 
           style={{backgroundColor: '#ffffff', height: 50, borderWidth: 0.5, borderColor: '#000000', borderRadius: 10, fontSize: 25, paddingLeft: 10, marginBottom: 5}}
           onChangeText={text => setSearch(text)}

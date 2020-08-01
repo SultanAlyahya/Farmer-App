@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import {testOrders} from '../../assets/testData'
 import {observer} from 'mobx-react'
@@ -48,13 +48,12 @@ const OrdersInfo =({
 
 const OrderScreen =observer( ({navigation})=> {
 
-
+    useEffect(()=>{
+        console.log('token',userStore.token)
+    })
     return(
         
         <View style={{flex: 1}}>
-            <View style={{justifyContent: 'center', flexDirection: 'row', padding: 20, paddingTop: 40, backgroundColor: '#3d3'}}>
-                <Text style={{fontSize: 30}}>Orders</Text>
-            </View>
             {userStore.token !== ''?
                 <View>
                     

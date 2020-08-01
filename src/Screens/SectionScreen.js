@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList, Dimensions, Text } from 'react-native';
-import { MaterialCommunityIcons, Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, FlatList, Dimensions, Text, Image } from 'react-native';
+import { MaterialCommunityIcons} from '@expo/vector-icons';
 import { observer } from 'mobx-react'
 import store from '../Mobx/store'
 import 'mobx-react-lite/batchingForReactNative'
@@ -25,8 +25,9 @@ const ItenShort= ({
   
   return(
       <View style={{flex:1, marginBottom:10}}>
-          <View style={{width:itemWidht*0.75, height:itemWidht*0.75, backgroundColor:'#d3d3d3', marginHorizontal:itemWidht*0.25/2}}>
-  
+          <View>
+            <Image style={{width: itemWidht, height: itemWidht}}
+            source={require('../../assets/lettuce.png')}/>
           </View>
           <View style={{flexDirection:'row', justifyContent:'space-between', paddingHorizontal:10, marginVertical:5}}>
               <Text style={{fontSize:23}}>{name}</Text>
@@ -38,7 +39,7 @@ const ItenShort= ({
           <View style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'space-around', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}>
               <TouchableOpacity
               onPress={()=>increaseProductItems(id)}>
-                  <Entypo name="plus" size={35} color="black" />
+                  <MaterialCommunityIcons name="plus" size={40} color="#000" />
               </TouchableOpacity>
               <Text style={{fontSize:30, color:'#33dd33'}}>{pieces}</Text>
 
@@ -46,14 +47,14 @@ const ItenShort= ({
 
               <TouchableOpacity
               onPress={()=> deleteProductFormCart(id)}>
-                  <MaterialIcons name="delete" size={35} color="black" />
+                  <MaterialCommunityIcons name="delete" size={35} color="#000" />
               </TouchableOpacity>
 
               :
 
               <TouchableOpacity
               onPress={()=>decreaseProductItems(id)}>
-                  <Entypo name="minus" size={35} color="black" />
+                  <MaterialCommunityIcons name="minus" size={40} color="#000" />
               </TouchableOpacity>
 
               }
@@ -64,7 +65,7 @@ const ItenShort= ({
           <TouchableOpacity style={{height:50, marginHorizontal:10, borderRadius:5, flexDirection:'row', justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingTop:7}}
           onPress={()=>addProductTocart(id)}>
               <Text style={{fontSize:25, color:'#33dd33'}}>add </Text>
-              <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
+              
           </TouchableOpacity>
 
           }
@@ -86,9 +87,8 @@ const ItenLong =({
 })=> {
   return(
       <View style={{flex:1, marginBottom:5, flexDirection:'row', justifyContent:'space-between',}}>
-          <View style={{width:150, height:150, backgroundColor:'#d3d3d3'}}>
-              
-          </View>
+          <Image style={{width: 150, height: 150}}
+            source={require('../../assets/lettuce.png')}/>
 
           <View style={{justifyContent:'space-around'}}>
               <Text style={{fontSize:25}}>{name}</Text>
@@ -96,27 +96,27 @@ const ItenLong =({
           </View>
 
           {select?
-          <View style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}>
+          <View style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30,  marginHorizontal:2}}>
 
               <TouchableOpacity
               onPress={()=>increaseProductItems(id)}>
-                  <Entypo name="plus" size={35} color="black" />
+                  <MaterialCommunityIcons name="plus" size={40} color="#000" />
               </TouchableOpacity>
 
-              <Text style={{fontSize:30, color:'#33dd33'}}> {pieces}</Text>
+              <Text style={{fontSize:30, color:'#33dd33'}}>  {pieces}</Text>
 
               {pieces === 1?
 
               <TouchableOpacity
               onPress={()=> deleteProductFormCart(id)}>
-                  <MaterialIcons name="delete" size={35} color="black" />
+                  <MaterialCommunityIcons name="delete" size={40} color="#000" />
               </TouchableOpacity>
 
               :
 
               <TouchableOpacity
               onPress={()=>decreaseProductItems(id)}>
-                  <Entypo name="minus" size={35} color="black" />
+                  <MaterialCommunityIcons name="minus" size={40} color="#000" />
               </TouchableOpacity>
 
               }
@@ -125,10 +125,10 @@ const ItenLong =({
           :
 
           <TouchableOpacity
-          style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30}}
+          style={{width:100, borderRadius:5, justifyContent:'center', borderWidth:1, borderColor:'#33dd33', paddingLeft:30, marginHorizontal:2}}
           onPress={()=>addProductTocart(id)}>
               <Text style={{fontSize:30, color:'#33dd33'}}>add </Text>
-              <MaterialCommunityIcons name="cart-plus" size={35} color="#33dd33" />
+              
           </TouchableOpacity>
 
           }
@@ -142,19 +142,36 @@ const ItenLong =({
 const SectionScreen =observer( ()=>{
 
   const [search,setSearch] = useState()
-  const [filterLong, setFilterLong] = useState(false)
+  const [isGrid, setIsGrid] = useState(false)
 
-  const header =()=>{
+  const ListHeaderComponent =()=>{
     return(
-      <View style={{flexDirection:'row', marginBottom:5}}>
-
-        <TouchableOpacity onPress={()=> setFilterLong(false)}>
-          <AntDesign name="appstore-o" size={40} color="black" />
+      <View style={{flexDirection:'row', marginBottom:5, borderBottomWidth: 1, borderBottomColor: '#000'}}>
+        <TouchableOpacity style={{flex: 1, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'space-around', padding:5, borderRightWidth: 1, borderColor: '#000'}}>
+          <Text style={{fontSize:25}}>Sort by </Text>
+          <MaterialCommunityIcons name="sort" size={30} color="#000" />
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={()=> setFilterLong(true)}>
-          <AntDesign name="bars" size={40} color="black" />
+        <TouchableOpacity style={{flex: 1, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'space-around', padding:5, borderRightWidth: 1, borderColor: '#000'}}>
+          <Text style={{fontSize:25}}>Filter </Text>
+          <MaterialCommunityIcons name="filter" size={30} color="#000" />
         </TouchableOpacity>
+        <View style={{flex:1}}>
+          {isGrid? 
+           <TouchableOpacity style={{flex: 1, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'space-around', padding:5}}
+           onPress={()=> setIsGrid(false)}>
+            <Text style={{fontSize:25, marginVertical: 0}}>Grid</Text>
+            <MaterialCommunityIcons name="view-grid" size={30} color="#000" />
+          </TouchableOpacity>
+       
+          :
+          <TouchableOpacity style={{flex: 1, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'space-around', padding:5}}
+          onPress={()=> setIsGrid(true)}>
+            <Text style={{fontSize:25, marginVertical: 0}}>Row </Text>
+            <MaterialCommunityIcons name="view-sequential" size={30} color="#000" />
+          </TouchableOpacity>
+          }
+        </View>
+        
 
       </View>
     )
@@ -187,13 +204,13 @@ const SectionScreen =observer( ()=>{
           placeholder='search'
         />
       </View>
+      <ListHeaderComponent/>
       
-      {filterLong?
+      {isGrid?
             
       <FlatList
       data={store.getProducts}
       extraData={store.renderSection}
-      ListHeaderComponent={header}
       renderItem={({item, index})=>
         <ItenLong
           name={item.name}
@@ -218,9 +235,7 @@ const SectionScreen =observer( ()=>{
       <FlatList
       data={store.getProducts}
       extraData={store.renderSection}
-      ListFooterComponent={()=> <View style={{height:50}}></View>}
       numColumns={2}
-      ListHeaderComponent={header}
       renderItem={({item, index})=>
         <ItenShort
           name={item.name}

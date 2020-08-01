@@ -7,7 +7,6 @@ class UserStore{
     @observable token = ""
     @observable isSeller = false
     @observable userName = ""
-    @observable token = ""
 
 
     @action load =async()=>{

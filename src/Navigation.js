@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,6 +20,7 @@ import DeleteItem from './Screens/DeleteItemScreen'
 import Statistics from './Screens/StatisticsScreen'
 import LocationScreen from './Screens/LocationScreen'
 import WelcomeScreen from './Screens/WelcomeScreen'
+import Video from './Screens/VideoScreen'
 
 
 
@@ -39,32 +40,6 @@ const ProfileScreens=()=>{
 
 const TabNavigator =()=> {
 
-  const IconWithBadge=({ color, size }) =>(
-    <Observer>{()=>
-      <View style={{ width: 24, height: 24, margin: 5 }}>
-        <AntDesign name="shoppingcart" color={color} size={size} />
-          {store.numOfProductInCart > 0 && (
-          <View
-            style={{
-              position: 'absolute',
-              right: -6,
-              top: -3,
-              backgroundColor: 'red',
-              borderRadius: 6,
-              width: 12,
-              height: 12,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-              {store.numOfProductInCart}
-            </Text>
-          </View>
-          )}
-      </View>
-    }</Observer>
-  );
-
 
   return(
     <Tab.Navigator tabBarOptions={{activeTintColor:'#00dd00'}}>
@@ -76,8 +51,10 @@ const TabNavigator =()=> {
         }}
         />
 
-        <Tab.Screen name="Cart" component={CartScreen} options={{
-          tabBarIcon: IconWithBadge
+        <Tab.Screen name="Video" component={Video} options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="tv" size={size} color={color} />
+          ),
         }}
         />
 
@@ -106,18 +83,49 @@ const TabNavigator =()=> {
   )
 }
 
-const Navigation = observer( ({logedin})=>{
-      console.log("loggedin",logedin)
+const Navigation = observer( ({loggedin})=>{
+      console.log("loggedin",loggedin)
+
+      const HeaderRightButton =({navigation})=>{
+        
+        return(
+          <Observer>{()=>
+            <TouchableOpacity style={{ width: 28, height: 28, marginHorizontal:20 }}
+            onPress={()=> navigation.navigate('cart')}>
+              <AntDesign name="shoppingcart" color={"#000"} size={28} />
+                {store.numOfProductInCart > 0 && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -6,
+                    top: -3,
+                    backgroundColor: 'red',
+                    borderRadius: 6,
+                    width: 15,
+                    height: 15,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
+                    {store.numOfProductInCart}
+                  </Text>
+                </View>
+                )}
+            </TouchableOpacity>
+          }</Observer>
+        )
+      }
       
   return(
     <NavigationContainer>
       
-      <Stack.Navigator initialRouteName={logedin? "tabNavigation": "welcome"}>
+      <Stack.Navigator initialRouteName={loggedin? "tabNavigation": "welcome"}>
         <Stack.Screen name="welcome" component={WelcomeScreen} options={{animationTypeForReplace: 'pop', headerShown: false}}/>
 
-        <Stack.Screen name="tabNavigation" component={TabNavigator} options={{headerShown: false}}/>
+        <Stack.Screen name="tabNavigation" component={TabNavigator} options={({navigation})=> ({ headerStyle:{backgroundColor:'#33dd33'}, headerTitle:"Farmer", headerRight: ()=>( <HeaderRightButton navigation={navigation}/>)})}/>
 
-        <Stack.Screen name="Section" component={SectionScreen} options={({route})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}})} />
+        <Stack.Screen name="Section" component={SectionScreen} options={({route, navigation})=> ({headerTitle:route.params.pageTitle, headerStyle:{backgroundColor:'#33dd33'}, headerRight: ()=>( <HeaderRightButton navigation={navigation}/>)})} />
+        <Stack.Screen name="cart" component={CartScreen} options={({navigation})=> ({ headerStyle:{backgroundColor:'#33dd33'}, headerTitle:"Cart", headerRight: ()=>( <HeaderRightButton navigation={navigation}/>)})}/>
 
         <Stack.Screen name="login" component={LoginScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
 

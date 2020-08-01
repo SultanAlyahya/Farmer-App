@@ -110,7 +110,7 @@ const LocationScreen =({navigation})=> {
 
         </MapView>
 
-        <View style={{position: 'absolute', top: 50,}}>
+        <View style={{position: 'absolute', top: 20,}}>
 
           <TextInput
           style={{marginHorizontal: 20, marginBottom: 10, height: 50, backgroundColor: '#ffffff', borderRadius: 10, paddingLeft: 10, fontSize: 20}}
