@@ -47,9 +47,16 @@ class UserStore{
 
     } 
 
-    // @computed get userName(){
-    //     return this.user.name
-    // }
+    @computed get getToken(){
+        if(this.token)
+            return this.token
+        return ''
+    }
+    @computed get getUserName(){
+        if(this.userName)
+            return this.userName
+        return ''
+    }
 }
 
 const store = new UserStore()

@@ -34,7 +34,7 @@ const ProfileScreen =observer (({navigation})=> {
                 source={require('../../assets/loginImage.png')}
             />
             </View>
-            {userStore.token === ""?
+            {userStore.getToken === ""?
             <View style={{flex:1}}>
             
             
