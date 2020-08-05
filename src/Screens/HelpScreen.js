@@ -1,52 +1,44 @@
 import React, {useEffect, useState} from 'react'
-import {View, TouchableOpacity, Text, TextInput, ScrollView, FlatList, Platform} from 'react-native'
-import {socket} from '../socket/socketIo'
+import {View, TouchableOpacity, Text, TextInput, FlatList, Platform, KeyboardAvoidingView} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { observer } from 'mobx-react'
+import socketIO from '../Mobx/socketIO'
+import 'mobx-react-lite/batchingForReactNative'
 
 
-const Help =()=> {
+const Help = observer( ()=> {
 
     const [message, setMessage] = useState('')
-    const [chat, setChat] = useState([])
+    const [sendDisable, setSendDisable] = useState(false)
 
-    const socketId = socket.id
+    const socketId = socketIO.socket.id
     
     useEffect(()=>{
-        socket.removeEventListener()
-        socket.on('userManagement', (newMessage)=>{
-            console.log(newMessage)
-        })
-        socket.on('message', (newMessage)=>{
-            if(newMessage.message === '')
-                return;
-            setChat(chat => [...chat, newMessage])
-        })
+        socketIO.listenToMessages()
     },[])
+
+ 
 
 
     const send =()=> {
-        if(message === '')
+        if(message === ''){
+            setSendDisable(false)
             return;
-        const newMessage = {message, messageId: chat.length+"",delivered: false, userId: socketId}
-        setChat(chat => [...chat, newMessage])
+        }
+        const newMessage = {message, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
+        socketIO.sendMessage(newMessage)
         setMessage('')
-        socket.emit('message', newMessage, (messageId)=>{
-            console.log('the message has delivered')
-            let newChat = chat
-            newChat[messageId] = {...newMessage, delivered: true}
-            console.log(newChat)
-            setChat(newChat)        
-        })
     }
 
     return(
-        <View style={{flex:1, backgroundColor: '#ededed'}}>
+        <KeyboardAvoidingView style={{flex:1, backgroundColor: '#ededed'}}  behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={ Platform.OS === 'ios' ? 40 : 0}>
 
             <FlatList
-            data={chat}
+            data={socketIO.chat.slice().reverse()}
+            inverted
+            extraData={socketIO.delivered}
             renderItem={({item})=>(
-                <View style={{backgroundColor: '#fff', margin: 2, padding: 10,
-                borderRadius: 10}}>
+                <View style={{backgroundColor: '#fff', margin: 2, padding: 10, borderRadius: 10}}>
                     {item.userId === socketId?
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{color: '#3ba8e7'}}>me </Text>
@@ -63,6 +55,7 @@ const Help =()=> {
                 </View>
             )}
             keyExtractor={item=> item.messageId}
+            onScrollToIndexFailed={(error)=> console.log(error)}
             />
 
             <View style={{backgroundColor: '#c3c3c3', flexDirection: 'row', paddingHorizontal: 20, paddingBottom:30, paddingTop: 15}}>
@@ -73,14 +66,15 @@ const Help =()=> {
                 multiline={true}
                 numberOfLines={Platform.OS ==='ios'? null: 40}
                 maxHeight={Platform.OS === 'ios'  ? 160 : null}
+                placeholder='message'
                 />
-                <TouchableOpacity style={{justifyContent:'center'}}
+                <TouchableOpacity disabled={sendDisable}  style={{justifyContent:'center'}}
                 onPress={()=> send()}>
                     <Text style={{fontSize: 20, marginHorizontal: 15}}>send</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
-}
+})
 
 export default Help;
