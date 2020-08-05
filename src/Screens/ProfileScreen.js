@@ -74,6 +74,11 @@ const ProfileScreen =observer (({navigation})=> {
                     <TouchableOpacity style={{height:60, borderBottomWidth:1, borderColor:'#000000', justifyContent:'center'}}>
                     <Text style={{fontSize:20, marginLeft:10}}>Edit location</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={{height:60, borderBottomWidth:1, borderColor:'#000000', justifyContent:'center'}}
+                    onPress={()=> navigation.navigate('help')}>
+                    <Text style={{fontSize:20, marginLeft:10}}>Help</Text>
+                    </TouchableOpacity>
                     
 
                     {userStore.isSeller?

@@ -21,6 +21,7 @@ import Statistics from './Screens/StatisticsScreen'
 import LocationScreen from './Screens/LocationScreen'
 import WelcomeScreen from './Screens/WelcomeScreen'
 import Video from './Screens/VideoScreen'
+import Help from './Screens/HelpScreen'
 
 
 
@@ -84,37 +85,37 @@ const TabNavigator =()=> {
 }
 
 const Navigation = observer( ({loggedin})=>{
-      console.log("loggedin",loggedin)
+     
 
-      const HeaderRightButton =({navigation})=>{
+  const HeaderRightButton =({navigation})=>{
         
-        return(
-          <Observer>{()=>
-            <TouchableOpacity style={{ width: 28, height: 28, marginHorizontal:20 }}
-            onPress={()=> navigation.navigate('cart')}>
-              <AntDesign name="shoppingcart" color={"#000"} size={28} />
-                {store.numOfProductInCart > 0 && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    right: -6,
-                    top: -3,
-                    backgroundColor: 'red',
-                    borderRadius: 6,
-                    width: 15,
-                    height: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
-                    {store.numOfProductInCart}
-                  </Text>
-                </View>
-                )}
-            </TouchableOpacity>
-          }</Observer>
-        )
-      }
+    return(
+      <Observer>{()=>
+        <TouchableOpacity style={{ width: 28, height: 28, marginHorizontal:20 }}
+        onPress={()=> navigation.navigate('cart')}>
+          <AntDesign name="shoppingcart" color={"#000"} size={28} />
+            {store.numOfProductInCart > 0 && (
+            <View
+              style={{
+                position: 'absolute',
+                right: -6,
+                top: -3,
+                backgroundColor: 'red',
+                borderRadius: 6,
+                width: 15,
+                height: 15,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
+                {store.numOfProductInCart}
+              </Text>
+            </View>
+            )}
+        </TouchableOpacity>
+      }</Observer>
+    )
+  }
       
   return(
     <NavigationContainer>
@@ -128,6 +129,8 @@ const Navigation = observer( ({loggedin})=>{
         <Stack.Screen name="cart" component={CartScreen} options={({navigation})=> ({ headerStyle:{backgroundColor:'#33dd33'}, headerTitle:"Cart", headerRight: ()=>( <HeaderRightButton navigation={navigation}/>)})}/>
 
         <Stack.Screen name="login" component={LoginScreen} options={{headerTitle:"User Profile", headerStyle:{backgroundColor:'#3ba8e7'}}} />
+
+        <Stack.Screen name="help" component={Help} options={{headerTitle:"Help", headerStyle:{backgroundColor:'#3ba8e7'}}} />
 
       </Stack.Navigator>
  
