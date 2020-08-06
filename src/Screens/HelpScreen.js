@@ -18,7 +18,7 @@ const Help = observer( ()=> {
     },[])
 
     
-    const send =()=> {
+    const send = async()=> {
         setSendDisable(true)
         if(message === ''){
             setSendDisable(false)
