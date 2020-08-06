@@ -20,17 +20,16 @@ const Help = observer( ()=> {
     
     const send =()=> {
         setSendDisable(true)
-        const messageCopy = message
-        setMessage('')
-        if(messageCopy === ''){
+        if(message === ''){
             setSendDisable(false)
             return;
         }
-        const newMessage = {message: messageCopy, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
+        const newMessage = {message, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
         socketIO.sendMessage(newMessage)
+        setMessage('')
         setTimeout(()=>{
             setSendDisable(false)
-        },100)
+        },150)
         
     }
 
