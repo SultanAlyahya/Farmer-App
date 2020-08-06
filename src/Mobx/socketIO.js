@@ -34,6 +34,10 @@ class LiveChatting{
             this.delivered = new Date()
         })
     }
+
+    @computed get getChat(){
+        return this.chat.slice().reverse()
+    }
 }
 
 const liveChatting = new LiveChatting()

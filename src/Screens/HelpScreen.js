@@ -17,24 +17,28 @@ const Help = observer( ()=> {
         socketIO.listenToMessages()
     },[])
 
- 
-
-
+    
     const send =()=> {
-        if(message === ''){
+        setSendDisable(true)
+        const messageCopy = message
+        setMessage('')
+        if(messageCopy === ''){
             setSendDisable(false)
             return;
         }
-        const newMessage = {message, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
+        const newMessage = {message: messageCopy, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
         socketIO.sendMessage(newMessage)
-        setMessage('')
+        setTimeout(()=>{
+            setSendDisable(false)
+        },100)
+        
     }
 
     return(
         <KeyboardAvoidingView style={{flex:1, backgroundColor: '#ededed'}}  behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={ Platform.OS === 'ios' ? 40 : 0}>
 
             <FlatList
-            data={socketIO.chat.slice().reverse()}
+            data={socketIO.getChat}
             inverted
             extraData={socketIO.delivered}
             renderItem={({item})=>(
@@ -61,12 +65,13 @@ const Help = observer( ()=> {
             <View style={{backgroundColor: '#c3c3c3', flexDirection: 'row', paddingHorizontal: 20, paddingBottom:30, paddingTop: 15}}>
                 <TextInput
                 style={{flex: 1, borderWidth: 1, borderColor: '#000', borderRadius: 10, backgroundColor: '#fff', fontSize: 25, padding:5}}
-                onChangeText={(text)=> setMessage(text)}
+                onChangeText={(text)=> sendDisable? undefined :setMessage(text)}
                 value={message}
                 multiline={true}
                 numberOfLines={Platform.OS ==='ios'? null: 40}
                 maxHeight={Platform.OS === 'ios'  ? 160 : null}
                 placeholder='message'
+                
                 />
                 <TouchableOpacity disabled={sendDisable}  style={{justifyContent:'center'}}
                 onPress={()=> send()}>
