@@ -13,8 +13,14 @@ class LiveChatting{
 
     @action sendMessage = async(message)=> {
         this.chat.push(message)
-        await soundSender.loadAsync(require('../../assets/sendMessage.mp3'));
-        await soundSender.playAsync();
+        console.log(soundSender._loaded)
+        if(!soundSender._loaded){
+            await soundSender.loadAsync(require('../../assets/sendMessage.mp3'));
+            await soundSender.playAsync();
+        }
+        else{
+            await soundSender.replayAsync()
+        }
         this.socket.emit('message', message, (messageId)=>{
             console.log('the message has delivered')
             this.chat.forEach(messages=>{
@@ -37,8 +43,13 @@ class LiveChatting{
             const message = {...newMessage, messageId: this.chat.length+''}
             this.chat.push(message)
             this.delivered = new Date()
-            await soundReceiver.loadAsync(require('../../assets/sendMessage.mp3'));
-            await soundReceiver.playAsync();
+            if(!soundReceiver._loaded){
+                await soundReceiver.loadAsync(require('../../assets/sendMessage.mp3'));
+                await soundReceiver.playAsync();
+            }
+            else{
+                await soundSender.replayAsync()
+            }
         })
     }
 

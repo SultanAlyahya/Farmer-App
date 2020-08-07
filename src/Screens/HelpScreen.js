@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {View, TouchableOpacity, Text, TextInput, FlatList, Platform, KeyboardAvoidingView} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react'
@@ -9,27 +9,30 @@ import 'mobx-react-lite/batchingForReactNative'
 const Help = observer( ()=> {
 
     const [message, setMessage] = useState('')
-    const [sendDisable, setSendDisable] = useState(false)
+
 
     const socketId = socketIO.socket.id
+    const sendDisable = useRef(false)
     
     useEffect(()=>{
         socketIO.listenToMessages()
     },[])
 
+
     
     const send = async()=> {
-        setSendDisable(true)
-        if(message === ''){
-            setSendDisable(false)
+        sendDisable.current = true
+        const messageCopy = message
+        setMessage('')
+        if(messageCopy === ''){
+            sendDisable.current = false
             return;
         }
-        const newMessage = {message, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
+        const newMessage = {message: messageCopy, messageId: socketIO.chat.length+"",delivered: false, userId: socketId}
         socketIO.sendMessage(newMessage)
-        setMessage('')
         setTimeout(()=>{
-            setSendDisable(false)
-        },150)
+            sendDisable.current = false
+        },200)
         
     }
 
@@ -64,7 +67,7 @@ const Help = observer( ()=> {
             <View style={{backgroundColor: '#c3c3c3', flexDirection: 'row', paddingHorizontal: 20, paddingBottom:30, paddingTop: 15}}>
                 <TextInput
                 style={{flex: 1, borderWidth: 1, borderColor: '#000', borderRadius: 10, backgroundColor: '#fff', fontSize: 25, padding:5}}
-                onChangeText={(text)=> sendDisable? undefined :setMessage(text)}
+                onChangeText={(text)=> sendDisable.current? undefined :setMessage(text)}
                 value={message}
                 multiline={true}
                 numberOfLines={Platform.OS ==='ios'? null: 40}
@@ -72,8 +75,9 @@ const Help = observer( ()=> {
                 placeholder='message'
                 
                 />
-                <TouchableOpacity disabled={sendDisable}  style={{justifyContent:'center'}}
-                onPress={()=> send()}>
+                <TouchableOpacity disabled={sendDisable.current}  style={{justifyContent:'center'}}
+                onPress={()=> send()}
+                >
                     <Text style={{fontSize: 20, marginHorizontal: 15}}>send</Text>
                 </TouchableOpacity>
             </View>
