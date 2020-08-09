@@ -40,7 +40,7 @@ class LiveChatting{
         this.socket.on('message', async(newMessage)=>{
             if(newMessage.message === '')
                 return;
-            const message = {...newMessage, messageId: this.chat.length+''}
+            const message = {...newMessage, messageId: this.chat.length+'', content: 'text'}
             this.chat.push(message)
             this.delivered = new Date()
             if(!soundReceiver._loaded){
@@ -51,6 +51,14 @@ class LiveChatting{
                 await soundSender.replayAsync()
             }
         })
+    }
+
+    @action sendVoiceMessage =(VoiceMessage)=> {
+        this.chat.push(VoiceMessage)
+        // this.socket.emit('message', VoiceMessage, (messageId)=>{
+        //     console.log(messageId)
+        // })
+        this.delivered = new Date()
     }
 
     @computed get getChat(){
